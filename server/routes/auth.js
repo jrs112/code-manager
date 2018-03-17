@@ -4,14 +4,14 @@ const User = require("../../models/userModel.js");
 const passport = require("passport");
 
 // process the signup form
-    router.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/landingpage', // redirect to the secure profile section
-        failureRedirect : '/usersignup', // redirect back to the signup page if there is an error
+    router.post('/createuser', passport.authenticate('local-signup', {
+        successRedirect : '/dashboard', // redirect to the secure profile section
+        failureRedirect : '/createuser', // redirect back to the signup page if there is an error
     }));
 
     // process the login form
     router.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/landingpage', // redirect to the secure profile section
+        successRedirect : '/dashboard', // redirect to the secure profile section
         failureRedirect : '/', // redirect back to the signup page if there is an error
 
     }));
