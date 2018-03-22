@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6 text-center">
+      <div class="card defaultCardStyle">
+        <div class="card projectCardStyle">
+          <h1><strong>Enter Project Info</strong></h1>
+          <form (ngSubmit)="onProjectSubmit(f)" #f="ngForm">
+            <div class="md-form">
+                <input type="text" id="projectTitle" class="form-control" mdbActive name="projectTitle" ngModel>
+                <label for="projectTitle">Project Title</label>
+            </div>
+
+            <div class="md-form">
+                <input type="text" id="projectDescription" class="form-control" mdbActive name="projectDescription" ngModel>
+                <label for="projectDescription">Project Description</label>
+            </div>
+
+            <div class="text-center">
+                <button type="button" class="btn btn-elegant waves-light" mdbRippleRadius (click)="addProjTask()" >Add Project Task</button>
+                <button type="button" class="btn btn-indigo waves-light" mdbRippleRadius (click)="addProjFeature()">Add Project Feature</button>
+                <div *ngFor="let taskCount of projectTaskArr; let i = index">
+                  <hr class="breakStyle" />
+                  <h4>{{i + 1}}. Project Task</h4>
+                  <div class="md-form">
+                      <input type="text" id="{{taskCount?.taskTitle}}" class="form-control" mdbActive name="{{taskCount?.taskTitle}}" ngModel>
+                      <label for="{{taskCount?.taskTitle}}">Enter Task Title:</label>
+                  </div>
+                  <div class="md-form">
+                      <input type="text" id="{{taskCount?.taskDescription}}" class="form-control" mdbActive name="{{taskCount?.taskDescription}}" ngModel>
+                      <label for="{{taskCount?.taskDescription}}">Enter Task Description:</label>
+                  </div>
+                  <button type="button" (click)="removeTask(i)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Task</button>
+                </div>
+                <hr class="breakStyle" />
+            </div>
+            <div *ngIf="errorMessage != ''">
+              <div class="alert alert-danger text-center">
+                {{errorMessage}}
+              </div>
+            </div>
+          </form>
+          <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k)" mdbRippleRadius>Create Project</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 text-center">
+      <div class="card defaultCardStyle">
+        <div class="card projectCardStyle">
+          <h1><strong>Project Features</strong></h1>
+          <h4 *ngIf="projectFeatureArr.length == 0">You Have Not Added Any Project Features</h4>
+          <form #k="ngForm" (ngSubmit)="onProjectSubmit(k)">
+            <div *ngFor="let featureCount of projectFeatureArr; let j = index">
+              <div class="card featureCardStyle">
+                <h4>{{j + 1}}. Project Feature</h4>
+                <div class="md-form">
+                    <input type="text" id="{{featureCount?.featureTitle}}" class="form-control" mdbActive name="{{featureCount?.featureTitle}}" ngModel>
+                    <label for="{{featureCount?.featureTitle}}">Enter Feature Title:</label>
+                </div>
+                <div class="md-form">
+                    <input type="text" id="{{featureCount?.featureDescription}}" class="form-control" mdbActive name="{{featureCount?.featureDescription}}" ngModel>
+                    <label for="{{featureCount?.featureDescription}}">Enter Feature Description:</label>
+                    <button type="button" (click)="removeFeature(j)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Task</button>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-deep-purple waves-light" mdbRippleRadius (click)="addFeatureTask(j)" >Add Feature Task</button>
+                </div>
+                <div *ngFor="let featureTask of featureCount.featureTask; let m = index">
+                  <hr class="breakStyle" />
+                  <h4>{{m + 1}}. Feature Task</h4>
+                  <div class="md-form">
+                      <input type="text" id="{{featureTask?.featureTaskTitle}}" class="form-control" mdbActive name="{{featureTask?.featureTaskTitle}}" ngModel>
+                      <label for="{{featureTask?.featureTaskTitle}}">Enter Task Title:</label>
+                  </div>
+                  <div class="md-form">
+                      <input type="text" id="{{featureTask?.featureTaskDescription}}" class="form-control" mdbActive name="{{featureTask?.featureTaskDescription}}" ngModel>
+                      <label for="{{featureTask?.featureTaskDescription}}">Enter Task Description:</label>
+                  </div>
+                  <button type="button" (click)="removeFeatureTask(j, m)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Task</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

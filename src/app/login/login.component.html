@@ -20,6 +20,11 @@
           <div class="text-center">
               <button class="btn btn-default waves-light" mdbRippleRadius>Login</button>
           </div>
+          <div *ngIf="errorMessage != ''">
+            <div class="alert alert-danger text-center">
+              {{errorMessage}}
+            </div>
+          </div>
       </form>
       <a routerLink="/createuser">Create Account</a>
     </div>

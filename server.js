@@ -43,6 +43,7 @@ let response = {
 
 // API file for interacting with MongoDB
 const auth = require("./server/routes/auth");
+const projectRoute = require("./server/routes/project");
 
 
 // Parsers
@@ -70,6 +71,7 @@ app.use(function(req, res, next) {
 
 
 app.use("/auth", auth);
+app.use("/dataproject", projectRoute);
 require('./server/config/passport.js')(passport);
 
 

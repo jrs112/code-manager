@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit {
       console.log(info);
 
     },
-  (other) =>  {
-    console.log(other);
-    console.log(other.url);
-    let urlPath = other.url;
+  (authRes) =>  {
+    console.log(authRes);
+    console.log(authRes.url);
+    let urlPath = authRes.url;
     let urlPathArray = urlPath.split('/');
     let lastSegment = urlPathArray[urlPathArray.length - 1];
     console.log(lastSegment);
-    if(lastSegment == "/") {
+    if(lastSegment == "") {
       this.errorMessage = "Incorrect Login Information"
       return;
     }

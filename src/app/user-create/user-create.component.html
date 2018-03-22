@@ -29,6 +29,12 @@
               <label for="userPassTwo">Confirm password</label>
           </div>
 
+          <div *ngIf="errMsg != ''">
+            <div class="alert alert-danger text-center">
+              {{errMsg}}
+            </div>
+          </div>
+
           <div class="text-center">
               <button class="btn btn-default waves-light" mdbRippleRadius>Create Account</button>
           </div>

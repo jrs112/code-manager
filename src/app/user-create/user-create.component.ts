@@ -26,9 +26,9 @@ export class UserCreateComponent implements OnInit {
     .subscribe(info => {
       console.log(info);
     },
-    err => {
-          console.log("Error occured: ", err.url);
-          let urlPath = err.url;
+    authRes => {
+          console.log("Error occured: ", authRes.url);
+          let urlPath = authRes.url;
           let urlPathArray = urlPath.split('/');
           let lastSegment = urlPathArray[urlPathArray.length - 1];
           if(lastSegment == "createuser") {

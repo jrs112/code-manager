@@ -22,5 +22,9 @@ export class UserApiService {
     return this.http.get("/auth/logout");
   }
 
+  userInfo() {
+    return this.http.get("/auth/userinfo");
+  }
+
 
 }

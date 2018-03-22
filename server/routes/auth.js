@@ -20,7 +20,10 @@ const passport = require("passport");
     router.get("/logout", function(req, res) {
         req.logout();
         req.session.destroy(function(err) {
-            res.redirect('/');
+            var routeObj = {
+              url: "/"
+            }
+            res.json(routeObj);
 
         });
     });

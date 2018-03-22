@@ -12,6 +12,9 @@ import { LoginComponent } from './login/login.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserApiService } from "./services/user-api.service";
+import { ProjectApiService } from "./services/project-api.service";
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ProjectCreateComponent } from './project-create/project-create.component';
 
 
 
@@ -20,7 +23,9 @@ import { UserApiService } from "./services/user-api.service";
     AppComponent,
     LoginComponent,
     UserCreateComponent,
-    DashboardComponent
+    DashboardComponent,
+    NavMenuComponent,
+    ProjectCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,7 @@ import { UserApiService } from "./services/user-api.service";
     RouterModule.forRoot(routes)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [UserApiService],
+  providers: [UserApiService, ProjectApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
