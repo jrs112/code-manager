@@ -13,4 +13,13 @@ export class ProjectApiService {
    return this.http.post("/dataproject/createproject", userInfo);
   }
 
+  getUserProjects() {
+    return this.http.get("/dataproject/alluserprojects");
+  }
+
+  updateProject(id, info) {
+    return this.http.put("/dataproject/updateproject/" + id, info);
+  }
+
+
 }

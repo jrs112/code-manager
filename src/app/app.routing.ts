@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { UserCreateComponent } from "./user-create/user-create.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProjectCreateComponent } from "./project-create/project-create.component";
+import { ProjectViewComponent } from "./project-view/project-view.component";
 
 export const routes: Routes = [
 
@@ -22,6 +23,10 @@ export const routes: Routes = [
   {
     path: 'createproject',
     component: ProjectCreateComponent
+  },
+  {
+    path: 'viewallprojects',
+    component: ProjectViewComponent
   },
   {
     path: '',

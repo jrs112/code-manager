@@ -1,0 +1,101 @@
+<div *ngIf="currentProjects.length === 0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <div class="card defaultCardStyle text-center">
+          <h1>You currently don't have any projects</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="currentProjects.length > 0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div *ngFor="let project of currentProjects; let i = index">
+          <div class="card defaultCardStyle">
+            <h1 class="text-center"><strong>{{project?.projectTitle}}</strong></h1>
+            <h4 class="text-center"><strong>{{project?.projectDescription}}</strong></h4>
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatForm = !showFeatForm">Add Feature</button>
+            </div>
+            <div *ngIf="showFeatForm">
+              <form #newProjFeat="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newFeatTitle" class="form-control" mdbActive name="newFeatTitle" ngModel>
+                    <label for="newFeatTitle">Enter Feature Title:</label>
+                </div>
+                <div class="md-form">
+                    <textarea type="text" id="newFeatDescription" class="form-control" mdbActive name="newFeatDescription" ngModel></textarea>
+                    <label for="newFeatDescription">Enter Feature Description:</label>
+                    <button type="button" (click)="showFeatForm = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addProjFeature(i, newProjFeat)">Add Project Feature</button>
+                </div>
+              </form>
+            </div>
+            <hr />
+            <ul *ngFor="let projectTask of project.projectTask; let j = index">
+              <li class="pointerStyle" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
+                <h5>{{projectTask?.taskTitle}}</h5>
+                <h6>{{projectTask?.taskDescription}}</h6>
+              </li>
+              <li class="pointerStyle" *ngIf="projectTask.taskCompleted" (click)="updateProjTask(i, j, false)">
+                <h5><del>{{projectTask?.taskTitle}}</del></h5>
+                <h6><del>{{projectTask?.taskDescription}}</del></h6>
+              </li>
+            </ul>
+            <div>
+                <button type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add Task</button>
+            </div>
+            <div *ngIf="showProjTaskForm">
+              <form #newProjTask="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newProjTaskTitle" class="form-control" mdbActive name="newProjTaskTitle" ngModel>
+                    <label for="newProjTaskTitle">Enter Task Title:</label>
+                </div>
+                <div class="md-form">
+                    <textarea type="text" id="newProjTaskDescription" class="form-control" mdbActive name="newProjTaskDescription" ngModel></textarea>
+                    <label for="newProjTaskDescription">Enter Task Description:</label>
+                    <button type="button" (click)="showProjTaskForm = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addProjTask(i, newProjTask)">Add Project Task</button>
+                </div>
+              </form>
+            </div>
+            <hr *ngIf="project.projectTask.length > 0">
+            <div *ngFor="let projectFeature of project.projectFeature; let k = index">
+              <h4 class="text-center"><strong>{{projectFeature?.featureTitle}}</strong></h4>
+              <h6 class="text-center"><strong>{{projectFeature?.featureDescription}}</strong></h6>
+              <ul *ngFor="let featureTask of projectFeature.featureTask; let m = index">
+                <li class="pointerStyle" *ngIf="!featureTask.featureTaskCompleted" (click)="updateFeatureTask(i, k, m, true)">
+                  <h5>{{featureTask?.featureTaskTitle}}</h5>
+                  <h6>{{featureTask?.featureTaskDescription}}</h6>
+                </li>
+                <li class="pointerStyle" *ngIf="featureTask.featureTaskCompleted" (click)="updateFeatureTask(i, k, m, false)">
+                  <h5><del>{{featureTask?.featureTaskTitle}}</del></h5>
+                  <h6><del>{{featureTask?.featureTaskDescription}}</del></h6>
+                </li>
+              </ul>
+              <button type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="addFeatTaskForm(projectFeature)">Add Task</button>
+              <div *ngIf="projectFeature.addTask">
+                <form #newFeatTask="ngForm">
+                  <div class="md-form">
+                      <input type="text" id="newFeatureTaskTitle" class="form-control" mdbActive name="newFeatureTaskTitle" ngModel>
+                      <label for="newFeatureTaskTitle">Enter Task Title:</label>
+                  </div>
+                  <div class="md-form">
+                      <textarea type="text" id="newFeatureTaskDescription" class="form-control" mdbActive name="newFeatureTaskDescription" ngModel></textarea>
+                      <label for="newFeatureTaskDescription">Enter Task Description:</label>
+                      <button type="button" (click)="cancelAddTask(projectFeature)" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                      <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addFeatureTask(i, k, newFeatTask)" >Add Feature Task</button>
+                  </div>
+                </form>
+              </div>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

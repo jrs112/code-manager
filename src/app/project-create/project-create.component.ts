@@ -117,10 +117,12 @@ export class ProjectCreateComponent implements OnInit {
       projectFeatureInfo.push(projectFeatureInfoObj);
     }
 
+    console.log(this.userInfo._id);
+
 
 
     var projectObj = {
-      userId: this.userInfo.id,
+      userId: this.userInfo._id,
       projectTitle: projectInfo.projectTitle,
       projectDescription: projectInfo.projectDescription,
       projectTask: projectTaskInfo,

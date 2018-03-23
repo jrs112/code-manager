@@ -15,6 +15,7 @@ import { UserApiService } from "./services/user-api.service";
 import { ProjectApiService } from "./services/project-api.service";
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProjectCreateComponent } from './project-create/project-create.component';
+import { ProjectViewComponent } from './project-view/project-view.component';
 
 
 
@@ -25,7 +26,8 @@ import { ProjectCreateComponent } from './project-create/project-create.componen
     UserCreateComponent,
     DashboardComponent,
     NavMenuComponent,
-    ProjectCreateComponent
+    ProjectCreateComponent,
+    ProjectViewComponent
   ],
   imports: [
     BrowserModule,
