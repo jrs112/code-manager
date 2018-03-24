@@ -4,7 +4,7 @@
       <div class="card defaultCardStyle">
         <div class="card projectCardStyle">
           <h1><strong>Enter Project Info</strong></h1>
-          <form (ngSubmit)="onProjectSubmit(f)" #f="ngForm">
+          <form #f="ngForm">
             <div class="md-form">
                 <input type="text" id="projectTitle" class="form-control" mdbActive name="projectTitle" ngModel>
                 <label for="projectTitle">Project Title</label>
@@ -47,7 +47,7 @@
       <div class="card defaultCardStyle">
         <h1><strong>Project Features</strong></h1>
         <h4 *ngIf="projectFeatureArr.length == 0">You Have Not Added Any Project Features</h4>
-        <form #k="ngForm" (ngSubmit)="onProjectSubmit(k)">
+        <form #k="ngForm">
           <div *ngFor="let featureCount of projectFeatureArr; let j = index">
             <div class="card featureCardStyle">
               <h4 class="featureHead"><strong>{{j + 1}}. Project Feature</strong></h4>
