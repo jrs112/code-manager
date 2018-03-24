@@ -12,9 +12,11 @@ const cookieParser = require('cookie-parser');
 var mongoUser = process.env.Mongo_User;
 var mongoPassword = process.env.Mongo_Password;
 const server = http.createServer(app);
+var userName = "jrs112";
+var pass = "champ55";
 
 // Connect
-const db = "mongodb://localhost/CodeManager"
+const db = "mongodb://" + mongoUser + ":" + mongoPassword + "@ds123259.mlab.com:23259/code-manager";
 useMongoClient: true;
 mongoose.Promise = global.Promise;
 //connect and show any mongoose errors
