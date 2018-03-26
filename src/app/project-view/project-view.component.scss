@@ -4,6 +4,7 @@
   border-style: solid;
   border-width: 3px;
   border-color: black;
+  margin-bottom: 50px;
 }
 
 .pointerStyle {
@@ -12,4 +13,30 @@
 
 .addFeatTaskBtn {
   margin-bottom: 20px;
+}
+
+.listGroupStyle {
+  margin-top: 15px;
+}
+
+.listStyle {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(141,172,166);
+}
+
+.listStyle:hover {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(228,188,54);
+  background: rgb(0,62,83);
+  color: rgb(210,233,225);
+}
+
+.clickedClass {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(141,172,166);
+  background: rgb(228,188,54);
+  color: rgb(0,62,83);
 }

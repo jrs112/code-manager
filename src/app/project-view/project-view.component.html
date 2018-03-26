@@ -1,18 +1,20 @@
-<div *ngIf="currentProjects.length === 0">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <div class="card defaultCardStyle text-center">
-          <h1>You currently don't have any projects</h1>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="list-group listGroupStyle">
+        <div *ngFor="let allProject of allProjects" (click)="updateCurrentProjects(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
+          <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
+          <h5 class="text-center">{{allProject?.projectDescription}}</h5>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div *ngIf="currentProjects.length > 0">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-8">
+    <div class="col-8">
+      <div *ngIf="currentProjects.length === 0 ">
+        <div class="card defaultCardStyle text-center">
+          <h1>Select A Project On The Left</h1>
+        </div>
+      </div>
+      <div *ngIf="currentProjects.length > 0">
         <div *ngFor="let project of currentProjects; let i = index">
           <div class="card defaultCardStyle">
             <h1 class="text-center"><strong>{{project?.projectTitle}}</strong></h1>

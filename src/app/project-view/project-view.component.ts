@@ -9,31 +9,47 @@ import { ProjectApiService } from "../services/project-api.service";
 export class ProjectViewComponent implements OnInit {
 
   constructor(private projectApiService: ProjectApiService) { }
-
+  allProjects = [];
   currentProjects = [];
   showProjTaskForm = false;
   showFeatForm = false;
 
   ngOnInit() {
-    this.updateCurrentProjects();
+    this.getAllProjects();
 
   }
 
-  updateCurrentProjects() {
+
+  getAllProjects() {
     this.projectApiService.getUserProjects()
       .subscribe(
         (order: any[]) => {
-          this.currentProjects = order;
+          this.allProjects = order;
+          console.log("test", this.allProjects);
+        },
+        (error) => console.log(error)
+        );
+  }
+
+  updateCurrentProjects(selectedProject) {
+          this.currentProjects = [];
+          this.currentProjects.push(selectedProject);
           console.log(this.currentProjects);
           for (var i = 0; i < this.currentProjects.length; i++) {
             for (var j = 0; j < this.currentProjects[i].projectFeature.length; j++) {
               this.currentProjects[i].projectFeature[j].addTask = false;
             }
           }
-        },
-        (error) => console.log(error)
-        );
   }
+
+  isActive(project) {
+    for (var i = 0; i < this.currentProjects.length; i++) {
+      if (project == this.currentProjects[i]) {
+        return true;
+      }
+    }
+      return false;
+  };
 
   updateProjTask(projIndex, taskIndex, bool) {
     var updateObj = this.currentProjects[projIndex];
@@ -43,7 +59,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (res: any[]) => {
         console.log("success", res)
-        this.updateCurrentProjects();
+        this.updateCurrentProjects(this.currentProjects[projIndex]);
       },
       (error) => console.log(error)
       );
@@ -57,7 +73,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects();
+        this.updateCurrentProjects(this.currentProjects[projIndex]);
       },
       (error) => console.log(error)
       );
@@ -88,7 +104,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects();
+        this.updateCurrentProjects(this.currentProjects[projectIndex]);
       },
       (error) => console.log(error)
       );
@@ -105,7 +121,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects();
+        this.updateCurrentProjects(this.currentProjects[projectIndex]);
         this.showProjTaskForm = false;
       },
       (error) => console.log(error)
@@ -123,7 +139,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects();
+        this.updateCurrentProjects(this.currentProjects[projectIndex]);
         this.showFeatForm = false;
       },
       (error) => console.log(error)
