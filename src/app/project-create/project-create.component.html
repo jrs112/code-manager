@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-center">
-    <div class="col-6 text-center">
+    <div class="col-4 text-center">
       <div class="card defaultCardStyle">
         <div class="card projectCardStyle">
           <h1><strong>Enter Project Info</strong></h1>
@@ -18,6 +18,7 @@
             <div class="text-center">
                 <button type="button" class="btn btn-elegant waves-light" mdbRippleRadius (click)="addProjTask()" >Add Project Task</button>
                 <button type="button" class="btn btn-indigo waves-light" mdbRippleRadius (click)="addProjFeature()">Add Project Feature</button>
+                <button type="button" class="btn btn-warning waves-light" mdbRippleRadius (click)="addProjStory()">Add Project Story</button>
                 <div *ngFor="let taskCount of projectTaskArr; let i = index">
                   <hr class="breakStyle" />
                   <h4 class="projectTaskHead"><strong>Project Task-{{i + 1}}</strong></h4>
@@ -39,18 +40,18 @@
               </div>
             </div>
           </form>
-          <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k)" mdbRippleRadius>Create Project</button>
+          <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k, n)" mdbRippleRadius>Create Project</button>
         </div>
       </div>
     </div>
-    <div class="col-6 text-center">
+    <div class="col-4">
       <div class="card defaultCardStyle">
-        <h1><strong>Project Features</strong></h1>
-        <h4 *ngIf="projectFeatureArr.length == 0">You Have Not Added Any Project Features</h4>
+        <h1 class="text-center"><strong>Project Features</strong></h1>
+        <h4 *ngIf="projectFeatureArr.length == 0" class="text-center">You Have Not Added Any Project Features</h4>
         <form #k="ngForm">
           <div *ngFor="let featureCount of projectFeatureArr; let j = index">
             <div class="card featureCardStyle">
-              <h4 class="featureHead"><strong>{{j + 1}}. Project Feature</strong></h4>
+              <h4 class="featureHead text-center"><strong>{{j + 1}}. Project Feature</strong></h4>
               <div class="md-form">
                   <input type="text" id="{{featureCount?.featureTitle}}" class="form-control" mdbActive name="{{featureCount?.featureTitle}}" ngModel>
                   <label for="{{featureCount?.featureTitle}}">Enter Feature Title:</label>
@@ -58,10 +59,10 @@
               <div class="md-form">
                   <textarea type="text" id="{{featureCount?.featureDescription}}" class="form-control" mdbActive name="{{featureCount?.featureDescription}}" ngModel></textarea>
                   <label for="{{featureCount?.featureDescription}}">Enter Feature Description:</label>
-                  <button type="button" (click)="removeFeature(j)" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Remove Feature</button>
+                  <button type="button" class="btn btn-deep-purple waves-light" mdbRippleRadius (click)="addFeatureTask(j)">Add Feature Task</button>
               </div>
-              <div>
-                <button type="button" class="btn btn-deep-purple waves-light" mdbRippleRadius (click)="addFeatureTask(j)" >Add Feature Task</button>
+              <div class="text-right">
+                <button type="button" (click)="removeFeature(j)" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Remove Feature</button>
               </div>
               <div *ngFor="let featureTask of featureCount.featureTask; let m = index">
                 <hr class="breakStyle" />
@@ -75,6 +76,36 @@
                     <label for="{{featureTask?.featureTaskDescription}}">Enter Task Description:</label>
                 </div>
                 <button type="button" (click)="removeFeatureTask(j, m)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Task</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card defaultCardStyle">
+        <h1 class="text-center"><strong>Enter Story</strong></h1>
+        <form #n="ngForm">
+          <div *ngFor="let storyCount of projectStoryArr; let o = index">
+            <div class="card featureCardStyle">
+              <h4 class="featureHead text-center"><strong>{{o + 1}}. Project Story</strong></h4>
+              <div class="md-form">
+                  <input type="text" id="{{storyCount?.storyTitle}}" class="form-control" mdbActive name="{{storyCount?.storyTitle}}" ngModel>
+                  <label for="{{storyCount?.storyTitle}}">Enter Story Title:</label>
+              </div>
+              <div>
+                <button type="button" class="btn btn-deep-purple waves-light" mdbRippleRadius (click)="addStoryStep(o)">Add Story Step</button>
+                <div class="text-right"><button type="button" class="btn btn-danger waves-light btn-sm" mdbRippleRadius (click)="removeStory(o)">Remove Story</button></div>
+
+              </div>
+              <div *ngFor="let storyStep of storyCount.storyStep; let p = index">
+                <hr class="breakStyle" />
+                <h4 class="featureTaskHead">{{o + 1}}. Story Step-{{p + 1}}</h4>
+                <div class="md-form">
+                  <textarea type="text" id="{{storyStep?.storyInfo}}" class="form-control" mdbActive name="{{storyStep?.storyInfo}}" ngModel></textarea>
+                  <label for="{{storyStep?.storyInfo}}">Enter Step Info:</label>
+                </div>
+                <button type="button" (click)="removeStoryStep(o, p)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Step</button>
               </div>
             </div>
           </div>

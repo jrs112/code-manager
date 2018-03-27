@@ -34,6 +34,12 @@ var projectSchema = mongoose.Schema({
             featureTaskCompletedOn: Date
           }]
         }],
+        projectStory: [{
+          storyTitle: String,
+          storyStep: [{
+            storyInfo: String
+          }]
+        }],
         projectNotes: Array,
         projectCompletedOn: Date
 

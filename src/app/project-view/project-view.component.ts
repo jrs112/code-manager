@@ -59,7 +59,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (res: any[]) => {
         console.log("success", res)
-        this.updateCurrentProjects(this.currentProjects[projIndex]);
+        this.updateCurrentProjects(res);
       },
       (error) => console.log(error)
       );
@@ -73,7 +73,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects(this.currentProjects[projIndex]);
+        this.updateCurrentProjects(data);
       },
       (error) => console.log(error)
       );
@@ -104,7 +104,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects(this.currentProjects[projectIndex]);
+        this.updateCurrentProjects(data);
       },
       (error) => console.log(error)
       );
@@ -121,7 +121,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects(this.currentProjects[projectIndex]);
+        this.updateCurrentProjects(data);
         this.showProjTaskForm = false;
       },
       (error) => console.log(error)
@@ -139,7 +139,7 @@ export class ProjectViewComponent implements OnInit {
     .subscribe(
       (data: any[]) => {
         console.log("success", data)
-        this.updateCurrentProjects(this.currentProjects[projectIndex]);
+        this.updateCurrentProjects(data);
         this.showFeatForm = false;
       },
       (error) => console.log(error)

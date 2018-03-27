@@ -11,10 +11,14 @@ export class ProjectCreateComponent implements OnInit {
   errorMessage = "";
   projectTaskArr = [];
   projectFeatureArr = [];
+  projectStoryArr = [];
   projectTaskCount = 0;
   projectFeatureCount = 0;
   featureTaskCount = 0;
+  projectStoryCount = 0;
+  storyStepCount = 0;
   userInfo;
+  showStory = false;
 
   constructor(private userApiService: UserApiService, private projectApiService: ProjectApiService) { }
 
@@ -48,6 +52,15 @@ export class ProjectCreateComponent implements OnInit {
     this.projectFeatureArr.push(featureObj);
   }
 
+  addProjStory() {
+    this.projectStoryCount++;
+    var storyObj = {
+      storyTitle: "storyTitle" + this.projectStoryCount,
+      storyStep: []
+    }
+    this.projectStoryArr.push(storyObj);
+  }
+
   addFeatureTask(index) {
     this.featureTaskCount++;
     var featureTaskObj = {
@@ -57,6 +70,15 @@ export class ProjectCreateComponent implements OnInit {
     this.projectFeatureArr[index].featureTask.push(featureTaskObj);
   }
 
+  addStoryStep(index) {
+    this.storyStepCount++;
+    var storyStepObj = {
+      storyInfo: "storyInfo" + this.storyStepCount,
+    }
+    this.projectStoryArr[index].storyStep.push(storyStepObj);
+  }
+
+
   removeTask(index) {
     this.projectTaskArr.splice(index, 1);
   }
@@ -64,19 +86,27 @@ export class ProjectCreateComponent implements OnInit {
   removeFeature(index) {
     this.projectFeatureArr.splice(index, 1);
   }
+  removeStory(index) {
+    this.projectStoryArr.splice(index, 1);
+  }
 
   removeFeatureTask(featureIndex, taskIndex) {
     this.projectFeatureArr[featureIndex].featureTask.splice(taskIndex, 1);
   }
+  removeStoryStep(storyIndex, stepIndex) {
+    this.projectStoryArr[storyIndex].storyStep.splice(stepIndex, 1);
+  }
 
-  createProject(project, feature) {
+  createProject(project, feature, story) {
 
     var projectInfo = project.value;
     var featureInfo = feature.value;
+    var storyInfo = story.value;
 
     //Set variable for project task info
     var projectTaskInfo = [];
     var projectFeatureInfo = [];
+    var projectStoryInfo = [];
 
 
     for (var i = 0; i < this.projectTaskArr.length; i++) {
@@ -117,6 +147,29 @@ export class ProjectCreateComponent implements OnInit {
       projectFeatureInfo.push(projectFeatureInfoObj);
     }
 
+    //Set Variable for project story Info
+
+    for(var m = 0; m < this.projectStoryArr.length; m++) {
+      var storyStepInfo = [];
+
+      for (var n = 0; n < this.projectStoryArr[m].storyStep.length; n++) {
+        var storyStepInfoVar = this.projectStoryArr[m].storyStep[n].storyInfo;
+        var storyStepObj = {
+          storyInfo: storyInfo[storyStepInfoVar]
+        };
+        storyStepInfo.push(storyStepObj);
+      }
+      var storyTitleInfo = this.projectStoryArr[m].storyTitle;
+
+      var projectStoryInfoObj = {
+        storyTitle: storyInfo[storyTitleInfo],
+        storyStep: storyStepInfo
+      };
+
+      projectStoryInfo.push(projectStoryInfoObj);
+
+    }
+
     console.log(this.userInfo._id);
 
 
@@ -126,7 +179,8 @@ export class ProjectCreateComponent implements OnInit {
       projectTitle: projectInfo.projectTitle,
       projectDescription: projectInfo.projectDescription,
       projectTask: projectTaskInfo,
-      projectFeature: projectFeatureInfo
+      projectFeature: projectFeatureInfo,
+      projectStory: projectStoryInfo
     }
 
     this.projectApiService.createProject(projectObj)
