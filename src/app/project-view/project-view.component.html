@@ -1,14 +1,17 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <div class="col-4">
+    <div class="col-2">
       <div class="list-group listGroupStyle">
         <div *ngFor="let allProject of allProjects" (click)="updateCurrentProjects(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
           <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
-          <h5 class="text-center">{{allProject?.projectDescription}}</h5>
+          <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = false" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
+          <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Show Story</button>
+          <button *ngIf="showUpdate && isActive(allProject)" (click)="showUpdate = false" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Cancel Update</button>
+          <button *ngIf="!showUpdate && isActive(allProject)" (click)="showUpdate = true" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
         </div>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-6">
       <div *ngIf="currentProjects.length === 0 ">
         <div class="card defaultCardStyle text-center">
           <h1>Select A Project On The Left</h1>
@@ -19,10 +22,31 @@
           <div class="card defaultCardStyle">
             <h1 class="text-center"><strong>{{project?.projectTitle}}</strong></h1>
             <h4 class="text-center"><strong>{{project?.projectDescription}}</strong></h4>
-            <div class="text-center">
-                <button type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatForm = !showFeatForm">Add Feature</button>
+            <div *ngIf="showUpdate">
+              <div class="text-center">
+                <button type="button" class="btn btn-danger waves-light btn-sm" (click)="showDeleteProj = true">Delete Project</button>
+                <div *ngIf="showDeleteProj" class="alert alert-danger">
+                  <h5>Are you sure you want to delete {{project?.projectTitle}}?</h5>
+                  <button class="btn btn-danger waves-light btn-sm" (click)="deleteProject(project)">Yes, Delete {{project?.projectTitle}}</button>
+                  <button class="btn btn-warning waves-light btn-sm" (click)="showDeleteProj = false">Cancel</button>
+                </div>
+              </div>
+              <form #newProjTitle="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newProjTitle" class="form-control" mdbActive name="newProjTitle" ngModel>
+                    <label for="newFeatTitle">Update Project Title:</label>
+                </div>
+                <div class="md-form">
+                    <textarea type="text" id="newProjDescription" class="form-control" mdbActive name="newProjDescription" ngModel></textarea>
+                    <label for="newProjDescription">Update Project Description:</label>
+                    <button type="button" class="btn btn-warning waves-light btn-sm" mdbRippleRadius (click)="updateProjTitle(i, newProjTitle)">Update Project Title/Description</button>
+                </div>
+              </form>
             </div>
-            <div *ngIf="showFeatForm">
+            <div class="text-center">
+                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatForm = true">Add Feature</button>
+            </div>
+            <div *ngIf="showFeatForm && !showUpdate">
               <form #newProjFeat="ngForm">
                 <div class="md-form">
                     <input type="text" id="newFeatTitle" class="form-control" mdbActive name="newFeatTitle" ngModel>
@@ -48,9 +72,9 @@
               </li>
             </ul>
             <div>
-                <button type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add Task</button>
+                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add Task</button>
             </div>
-            <div *ngIf="showProjTaskForm">
+            <div *ngIf="showProjTaskForm && !showUpdate">
               <form #newProjTask="ngForm">
                 <div class="md-form">
                     <input type="text" id="newProjTaskTitle" class="form-control" mdbActive name="newProjTaskTitle" ngModel>
@@ -78,8 +102,8 @@
                   <h6><del>{{featureTask?.featureTaskDescription}}</del></h6>
                 </li>
               </ul>
-              <button type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="addFeatTaskForm(projectFeature)">Add Task</button>
-              <div *ngIf="projectFeature.addTask">
+              <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="addFeatTaskForm(projectFeature)">Add Task</button>
+              <div *ngIf="projectFeature.addTask && !showUpdate">
                 <form #newFeatTask="ngForm">
                   <div class="md-form">
                       <input type="text" id="newFeatureTaskTitle" class="form-control" mdbActive name="newFeatureTaskTitle" ngModel>
@@ -95,6 +119,20 @@
               </div>
               <hr />
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div *ngIf="showStory">
+        <div *ngFor="let project of currentProjects">
+          <div class="card storyCardStyle" *ngFor="let story of project.projectStory">
+            <h1 class="text-center">{{story?.storyTitle}}</h1>
+            <ul>
+              <li *ngFor="let storyStep of story.storyStep">
+                {{storyStep?.storyInfo}}
+              </li>
+            </ul>
           </div>
         </div>
       </div>

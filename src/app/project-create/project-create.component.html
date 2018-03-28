@@ -9,12 +9,10 @@
                 <input type="text" id="projectTitle" class="form-control" mdbActive name="projectTitle" ngModel>
                 <label for="projectTitle">Project Title</label>
             </div>
-
             <div class="md-form">
                 <textarea type="text" id="projectDescription" class="form-control" mdbActive name="projectDescription" ngModel></textarea>
                 <label for="projectDescription">Project Description</label>
             </div>
-
             <div class="text-center">
                 <button type="button" class="btn btn-elegant waves-light" mdbRippleRadius (click)="addProjTask()" >Add Project Task</button>
                 <button type="button" class="btn btn-indigo waves-light" mdbRippleRadius (click)="addProjFeature()">Add Project Feature</button>
@@ -84,7 +82,8 @@
     </div>
     <div class="col-4">
       <div class="card defaultCardStyle">
-        <h1 class="text-center"><strong>Enter Story</strong></h1>
+        <h1 class="text-center"><strong>Project Stories</strong></h1>
+        <h4 *ngIf="projectStoryArr.length == 0" class="text-center">You Have Not Added Any Project Stories</h4>
         <form #n="ngForm">
           <div *ngFor="let storyCount of projectStoryArr; let o = index">
             <div class="card featureCardStyle">
@@ -96,7 +95,6 @@
               <div>
                 <button type="button" class="btn btn-deep-purple waves-light" mdbRippleRadius (click)="addStoryStep(o)">Add Story Step</button>
                 <div class="text-right"><button type="button" class="btn btn-danger waves-light btn-sm" mdbRippleRadius (click)="removeStory(o)">Remove Story</button></div>
-
               </div>
               <div *ngFor="let storyStep of storyCount.storyStep; let p = index">
                 <hr class="breakStyle" />

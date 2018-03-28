@@ -46,10 +46,24 @@ router.get("/alluserprojects", function(req, res) {
       var info = req.body;
       console.log("here is the info");
       console.log(info);
-      ServiceOrder.findByIdAndUpdate(req.params.id, {$push: info}, function(err, order) {
+      Project.findByIdAndUpdate(req.params.id, {$push: info}, function(err, order) {
         if (err) return handleError(err);
         console.log("sending back order");
         res.send(order);
+      });
+    });
+
+    router.post("/deleteproject", function(req, res) {
+      var info = req.body;
+      console.log("test", req.body._id);
+      Project.find({_id: req.body._id}).remove(function(err, rem) {
+        if(err) {
+          console.log("error occured: ", err);
+          return;
+        } else {
+          console.log("deleted")
+          res.json(rem);
+        }
       });
     });
 

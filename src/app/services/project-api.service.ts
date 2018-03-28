@@ -21,5 +21,9 @@ export class ProjectApiService {
     return this.http.put("/dataproject/updateproject/" + id, info);
   }
 
+  deleteProject(info) {
+    return this.http.post("/dataproject/deleteproject", info);
+  }
+
 
 }

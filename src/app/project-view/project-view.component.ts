@@ -13,6 +13,9 @@ export class ProjectViewComponent implements OnInit {
   currentProjects = [];
   showProjTaskForm = false;
   showFeatForm = false;
+  showStory = false;
+  showUpdate = false;
+  showDeleteProj = false;
 
   ngOnInit() {
     this.getAllProjects();
@@ -33,6 +36,7 @@ export class ProjectViewComponent implements OnInit {
 
   updateCurrentProjects(selectedProject) {
           this.currentProjects = [];
+          this.showStory = false;
           this.currentProjects.push(selectedProject);
           console.log(this.currentProjects);
           for (var i = 0; i < this.currentProjects.length; i++) {
@@ -55,6 +59,24 @@ export class ProjectViewComponent implements OnInit {
     var updateObj = this.currentProjects[projIndex];
     updateObj.projectTask[taskIndex].taskCompleted = bool;
     console.log(updateObj);
+    this.projectApiService.updateProject(updateObj._id, updateObj)
+    .subscribe(
+      (res: any[]) => {
+        console.log("success", res)
+        this.updateCurrentProjects(res);
+      },
+      (error) => console.log(error)
+      );
+  }
+
+  updateProjTitle(projIndex, titleForm) {
+    var updateObj = this.currentProjects[projIndex];
+    if(titleForm.value.newProjTitle != '' && titleForm.value.newProjTitle != null) {
+      updateObj.projectTitle = titleForm.value.newProjTitle
+    }
+    if(titleForm.value.newProjDescription != '' && titleForm.value.newProjDescription != null) {
+      updateObj.projectDescription = titleForm.value.newProjDescription;
+    }
     this.projectApiService.updateProject(updateObj._id, updateObj)
     .subscribe(
       (res: any[]) => {
@@ -144,6 +166,20 @@ export class ProjectViewComponent implements OnInit {
       },
       (error) => console.log(error)
       );
+  }
+
+  deleteProject(project) {
+    var deleteInfo = {
+      _id: project._id
+    };
+    this.projectApiService.deleteProject(deleteInfo)
+    .subscribe(
+      (data: any[]) => {
+        console.log("success", data);
+        this.getAllProjects();
+        this.currentProjects = [];
+      }
+    )
   }
 
 
