@@ -34,7 +34,7 @@
               <form #newProjTitle="ngForm">
                 <div class="md-form">
                     <input type="text" id="newProjTitle" class="form-control" mdbActive name="newProjTitle" ngModel>
-                    <label for="newFeatTitle">Update Project Title:</label>
+                    <label for="newProjTitle">Update Project Title:</label>
                 </div>
                 <div class="md-form">
                     <textarea type="text" id="newProjDescription" class="form-control" mdbActive name="newProjDescription" ngModel></textarea>
@@ -92,6 +92,27 @@
             <div *ngFor="let projectFeature of project.projectFeature; let k = index">
               <h4 class="text-center"><strong>{{projectFeature?.featureTitle}}</strong></h4>
               <h6 class="text-center"><strong>{{projectFeature?.featureDescription}}</strong></h6>
+              <div *ngIf="showUpdate">
+                <div class="text-center">
+                  <button type="button" (click)="projectFeature.showDelete = true" class="btn btn-danger btn-sm" mdbRippleRadius>Delete Feature</button>
+                  <div *ngIf="projectFeature.showDelete" class="alert alert-danger">
+                    <h5>Are you sure you want to delete feature {{projectFeature?.featureTitle}}?</h5>
+                    <button class="btn btn-danger waves-light btn-sm" (click)="deleteFeature(project, projectFeature, i, k)">Yes, Delete {{projectFeature?.featuretitle}}</button>
+                    <button class="btn btn-warning waves-light btn-sm" (click)="projectFeature.showDelete = false">Cancel</button>
+                  </div>
+                </div>
+                <form #updateProjFeature="ngForm">
+                  <div class="md-form">
+                      <input type="text" id="upFeatureTitle" class="form-control" mdbActive name="upFeatureTitle" ngModel>
+                      <label for="upFeatureTitle">Update Feature Title:</label>
+                  </div>
+                  <div class="md-form">
+                      <textarea type="text" id="upFeatureDescription" class="form-control" mdbActive name="upFeatureDescription" ngModel></textarea>
+                      <label for="upFeatureDescription">Update Feature Description:</label>
+                      <button type="button" class="btn btn-warning waves-light btn-sm" mdbRippleRadius (click)="updateFeature(i, k, updateProjFeature)">Update Feature Title/Description</button>
+                  </div>
+                </form>
+              </div>
               <ul *ngFor="let featureTask of projectFeature.featureTask; let m = index">
                 <li class="pointerStyle" *ngIf="!featureTask.featureTaskCompleted" (click)="updateFeatureTask(i, k, m, true)">
                   <h5>{{featureTask?.featureTaskTitle}} <button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteFeatureTask(project, projectFeature, featureTask, i, k, m)">Delete Task</button></h5>

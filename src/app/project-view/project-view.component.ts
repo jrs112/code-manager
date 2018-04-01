@@ -44,6 +44,7 @@ export class ProjectViewComponent implements OnInit {
     for (var i = 0; i < this.currentProjects.length; i++) {
       for (var j = 0; j < this.currentProjects[i].projectFeature.length; j++) {
         this.currentProjects[i].projectFeature[j].addTask = false;
+        this.currentProjects[i].projectFeature[j].showDelete = false;
       }
     }
   }
@@ -216,6 +217,21 @@ export class ProjectViewComponent implements OnInit {
     )
   }
 
+  deleteFeature(project, feature, projectIndex, featureIndex) {
+    var deleteFeatureObj = {
+      id: project._id,
+      featureId: feature._id
+    }
+    this.projectApiService.deleteFeature(deleteFeatureObj)
+    .subscribe(
+      (deleteInfo: any[]) => {
+        this.getAllProjects();
+        this.currentProjects[projectIndex].projectFeature.splice(featureIndex, 1);
+      }
+    )
+
+  }
+
   deleteFeatureTask(project, feature, task, projectIndex, featureIndex, taskIndex) {
     console.log("project", project);
     console.log("feature", feature);
@@ -234,6 +250,19 @@ export class ProjectViewComponent implements OnInit {
 
       },
       (err) => console.log("error", err)
+    )
+  }
+
+  updateFeature(projectIndex, featureIndex, feature) {
+    var project = this.currentProjects[projectIndex];
+    project.projectFeature[featureIndex].featureTitle = feature.value.upFeatureTitle;
+    project.projectFeature[featureIndex].featureDescription = feature.value.upFeatureDescription;
+    this.projectApiService.updateProject(project._id, project)
+    .subscribe(
+      (info: any[]) => {
+        this.updateCurrentProjects(info);
+      },
+    (err) => console.log("error", err)
     )
   }
 
