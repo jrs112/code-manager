@@ -25,5 +25,13 @@ export class ProjectApiService {
     return this.http.post("/dataproject/deleteproject", info);
   }
 
+  deleteProjectTask(info) {
+    return this.http.put("/dataproject/removeprojecttask", info);
+  }
+
+  deleteFeatureTask(info) {
+    return this.http.put("/dataproject/removefeaturetask", info);
+  }
+
 
 }

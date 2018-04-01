@@ -2,11 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-2">
       <div class="list-group listGroupStyle">
-        <div *ngFor="let allProject of allProjects" (click)="updateCurrentProjects(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
+        <div *ngFor="let allProject of allProjects" (click)="selectCurrentProject(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
           <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
           <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = false" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
           <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Show Story</button>
-          <button *ngIf="showUpdate && isActive(allProject)" (click)="showUpdate = false" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Cancel Update</button>
+          <button *ngIf="showUpdate && isActive(allProject)" (click)="showUpdate = false" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
           <button *ngIf="!showUpdate && isActive(allProject)" (click)="showUpdate = true" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
         </div>
       </div>
@@ -63,11 +63,11 @@
             <hr />
             <ul *ngFor="let projectTask of project.projectTask; let j = index">
               <li class="pointerStyle" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
-                <h5>{{projectTask?.taskTitle}}</h5>
+                <h5>{{projectTask?.taskTitle}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteProjTask(project, projectTask, i, j)">Delete Task</button></h5>
                 <h6>{{projectTask?.taskDescription}}</h6>
               </li>
               <li class="pointerStyle" *ngIf="projectTask.taskCompleted" (click)="updateProjTask(i, j, false)">
-                <h5><del>{{projectTask?.taskTitle}}</del></h5>
+                <h5><del>{{projectTask?.taskTitle}}</del><button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteProjTask(project, projectTask, i, j)">Delete Task</button></h5>
                 <h6><del>{{projectTask?.taskDescription}}</del></h6>
               </li>
             </ul>
@@ -94,11 +94,11 @@
               <h6 class="text-center"><strong>{{projectFeature?.featureDescription}}</strong></h6>
               <ul *ngFor="let featureTask of projectFeature.featureTask; let m = index">
                 <li class="pointerStyle" *ngIf="!featureTask.featureTaskCompleted" (click)="updateFeatureTask(i, k, m, true)">
-                  <h5>{{featureTask?.featureTaskTitle}}</h5>
+                  <h5>{{featureTask?.featureTaskTitle}} <button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteFeatureTask(project, projectFeature, featureTask, i, k, m)">Delete Task</button></h5>
                   <h6>{{featureTask?.featureTaskDescription}}</h6>
                 </li>
                 <li class="pointerStyle" *ngIf="featureTask.featureTaskCompleted" (click)="updateFeatureTask(i, k, m, false)">
-                  <h5><del>{{featureTask?.featureTaskTitle}}</del></h5>
+                  <h5><del>{{featureTask?.featureTaskTitle}}</del> <button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteFeatureTask(project, projectFeature, featureTask, i, k, m)">Delete Task</button></h5>
                   <h6><del>{{featureTask?.featureTaskDescription}}</del></h6>
                 </li>
               </ul>

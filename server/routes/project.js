@@ -67,6 +67,37 @@ router.get("/alluserprojects", function(req, res) {
       });
     });
 
+    // Remove project task
+router.put("/removeprojecttask", function(req, res) {
+    Project.update({"_id": req.body._id}, {"$pull": {"projectTask": {_id: req.body.taskId}}},function(err, data) {
+      if(err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      var successObj = {
+        "msg": "deleted"
+      };
+      res.json(successObj);
+    });
+});
+
+router.put("/removefeaturetask", function(req, res) {
+    Project.update({"_id": req.body._id, "projectFeature._id": {"$eq": req.body.featureId}}, {"$pull": {"projectFeature.$.featureTask": {_id: req.body.taskId}}},function(err, data) {
+      if(err) {
+        console.log(err);
+        res.send(err);
+        return;
+      }
+      var successObj = {
+        "msg": "deleted"
+      };
+      res.json(successObj);
+    });
+});
+
+
+
 
 
   module.exports = router;

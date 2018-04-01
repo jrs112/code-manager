@@ -34,6 +34,20 @@ export class ProjectViewComponent implements OnInit {
         );
   }
 
+
+  selectCurrentProject(selectedProject) {
+    this.currentProjects = [];
+    this.showStory = false;
+    this.showUpdate = false;
+    this.currentProjects.push(selectedProject);
+    console.log(this.currentProjects);
+    for (var i = 0; i < this.currentProjects.length; i++) {
+      for (var j = 0; j < this.currentProjects[i].projectFeature.length; j++) {
+        this.currentProjects[i].projectFeature[j].addTask = false;
+      }
+    }
+  }
+
   updateCurrentProjects(selectedProject) {
           this.currentProjects = [];
           this.showStory = false;
@@ -44,11 +58,13 @@ export class ProjectViewComponent implements OnInit {
               this.currentProjects[i].projectFeature[j].addTask = false;
             }
           }
+          this.getAllProjects();
+
   }
 
   isActive(project) {
     for (var i = 0; i < this.currentProjects.length; i++) {
-      if (project == this.currentProjects[i]) {
+      if (project._id == this.currentProjects[i]._id) {
         return true;
       }
     }
@@ -179,6 +195,45 @@ export class ProjectViewComponent implements OnInit {
         this.getAllProjects();
         this.currentProjects = [];
       }
+    )
+  }
+
+  deleteProjTask(project, task, projectIndex, taskIndex) {
+    console.log("project", project);
+    console.log("task", task);
+    var taskUpdateObj = {
+      _id: project._id,
+      taskId: task._id
+    }
+    this.projectApiService.deleteProjectTask(taskUpdateObj)
+    .subscribe(
+      (deleteInfo: any[]) => {
+        console.log(deleteInfo);
+        this.getAllProjects();
+        this.currentProjects[projectIndex].projectTask.splice(taskIndex, 1);
+      },
+      (err) => console.log("error", err)
+    )
+  }
+
+  deleteFeatureTask(project, feature, task, projectIndex, featureIndex, taskIndex) {
+    console.log("project", project);
+    console.log("feature", feature);
+    console.log("task", task);
+    var taskUpdateObj = {
+      _id: project._id,
+      featureId: feature._id,
+      taskId: task._id
+    }
+    this.projectApiService.deleteFeatureTask(taskUpdateObj)
+    .subscribe(
+      (deleteInfo: any[]) => {
+        console.log(deleteInfo);
+        this.getAllProjects();
+        this.currentProjects[projectIndex].projectFeature[featureIndex].featureTask.splice(taskIndex, 1);
+
+      },
+      (err) => console.log("error", err)
     )
   }
 
