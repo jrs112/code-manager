@@ -13,6 +13,7 @@ export class ProjectViewComponent implements OnInit {
   currentProjects = [];
   showProjTaskForm = false;
   showFeatForm = false;
+  showStoryForm = false;
   showStory = false;
   showUpdate = false;
   showDeleteProj = false;
@@ -20,6 +21,16 @@ export class ProjectViewComponent implements OnInit {
   ngOnInit() {
     this.getAllProjects();
 
+  }
+
+  showFeatureForm() {
+    this.showFeatForm = true;
+    this.showStoryForm = false;
+  }
+
+  showStoryFrm() {
+    this.showFeatForm = false;
+    this.showStoryForm = true;
   }
 
 
@@ -180,6 +191,24 @@ export class ProjectViewComponent implements OnInit {
         console.log("success", data)
         this.updateCurrentProjects(data);
         this.showFeatForm = false;
+      },
+      (error) => console.log(error)
+      );
+  }
+
+  addProjStory(projectIndex, form) {
+    var updateObj = this.currentProjects[projectIndex];
+    var newStoryObj = {
+      storyTitle: form.value.newStoryTitle
+    };
+    updateObj.projectStory.push(newStoryObj);
+    this.projectApiService.updateProject(updateObj._id, updateObj)
+    .subscribe(
+      (data: any[]) => {
+        console.log("success", data)
+        this.updateCurrentProjects(data);
+        this.getAllProjects
+        this.showStoryForm = false;
       },
       (error) => console.log(error)
       );

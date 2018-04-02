@@ -5,7 +5,7 @@
         <div *ngFor="let allProject of allProjects" (click)="selectCurrentProject(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
           <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
           <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = false" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
-          <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Show Story</button>
+          <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Story</button>
           <button *ngIf="showUpdate && isActive(allProject)" (click)="showUpdate = false" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
           <button *ngIf="!showUpdate && isActive(allProject)" (click)="showUpdate = true" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
         </div>
@@ -44,7 +44,8 @@
               </form>
             </div>
             <div class="text-center">
-                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatForm = true">Add Feature</button>
+                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatureForm()">Add Feature</button>
+                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-info waves-light btn-sm" mdbRippleRadius (click)="showStoryFrm()">Add Story</button>
             </div>
             <div *ngIf="showFeatForm && !showUpdate">
               <form #newProjFeat="ngForm">
@@ -57,6 +58,18 @@
                     <label for="newFeatDescription">Enter Feature Description:</label>
                     <button type="button" (click)="showFeatForm = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
                     <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addProjFeature(i, newProjFeat)">Add Project Feature</button>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="showStoryForm && !showUpdate">
+              <form #newProjStory="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newStoryTitle" class="form-control" mdbActive name="newStoryTitle" ngModel>
+                    <label for="newStoryTitle">Enter Story Title:</label>
+                </div>
+                <div class="md-form">
+                    <button type="button" (click)="showStoryForm = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addProjStory(i, newProjStory)">Add Project Story</button>
                 </div>
               </form>
             </div>
