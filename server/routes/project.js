@@ -111,6 +111,21 @@ router.put("/removefeaturetask", function(req, res) {
     });
 });
 
+// Remove project story
+router.put("/removeprojectstory", function(req, res) {
+Project.update({"_id": req.body._id}, {"$pull": {"projectStory": {_id: req.body.storyId}}},function(err, data) {
+  if(err) {
+    console.log(err);
+    res.send(err);
+    return;
+  }
+  var successObj = {
+    "msg": "deleted"
+  };
+  res.json(successObj);
+});
+});
+
 
 
 

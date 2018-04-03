@@ -57,12 +57,14 @@ export class ProjectViewComponent implements OnInit {
         this.currentProjects[i].projectFeature[j].addTask = false;
         this.currentProjects[i].projectFeature[j].showDelete = false;
       }
+      for (var k = 0; k < this.currentProjects[i].projectStory.length; k++) {
+        this.currentProjects[i].projectStory[k].showDelete = false;
+      }
     }
   }
 
   updateCurrentProjects(selectedProject) {
           this.currentProjects = [];
-          this.showStory = false;
           this.currentProjects.push(selectedProject);
           console.log(this.currentProjects);
           for (var i = 0; i < this.currentProjects.length; i++) {
@@ -207,7 +209,7 @@ export class ProjectViewComponent implements OnInit {
       (data: any[]) => {
         console.log("success", data)
         this.updateCurrentProjects(data);
-        this.getAllProjects
+        this.getAllProjects();
         this.showStoryForm = false;
       },
       (error) => console.log(error)
@@ -292,6 +294,22 @@ export class ProjectViewComponent implements OnInit {
         this.updateCurrentProjects(info);
       },
     (err) => console.log("error", err)
+    )
+  }
+
+  deleteStory(project, story, projectIndex, storyIndex) {
+    var featureUpdateObj = {
+      _id: project._id,
+      storyId: story._id
+    }
+    this.projectApiService.deleteStory(featureUpdateObj)
+    .subscribe(
+      (deleteInfo: any[]) => {
+        console.log(deleteInfo);
+        this.getAllProjects();
+        this.currentProjects[projectIndex].projectStory.splice(storyIndex, 1);
+      },
+      (err) => console.log("error", err)
     )
   }
 

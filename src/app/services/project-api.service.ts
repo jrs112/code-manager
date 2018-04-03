@@ -37,5 +37,9 @@ export class ProjectApiService {
     return this.http.put("/dataproject/removeprojectfeature", info);
   }
 
+  deleteStory(info) {
+    return this.http.put("/dataproject/removeprojectstory", info);
+  }
+
 
 }
