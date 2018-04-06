@@ -59,6 +59,7 @@ export class ProjectViewComponent implements OnInit {
       }
       for (var k = 0; k < this.currentProjects[i].projectStory.length; k++) {
         this.currentProjects[i].projectStory[k].showDelete = false;
+        this.currentProjects[i].projectStory[k].showAddStep = false;
       }
     }
   }

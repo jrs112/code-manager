@@ -73,7 +73,6 @@
                 </div>
               </form>
             </div>
-            <hr />
             <ul *ngFor="let projectTask of project.projectTask; let j = index">
               <li class="pointerStyle" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
                 <h5>{{projectTask?.taskTitle}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteProjTask(project, projectTask, i, j)">Delete Task</button></h5>
@@ -85,7 +84,7 @@
               </li>
             </ul>
             <div>
-                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add Task</button>
+                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add General Task</button>
             </div>
             <div *ngIf="showProjTaskForm && !showUpdate">
               <form #newProjTask="ngForm">
@@ -101,7 +100,7 @@
                 </div>
               </form>
             </div>
-            <hr *ngIf="project.projectTask.length > 0">
+            <hr />
             <div *ngFor="let projectFeature of project.projectFeature; let k = index">
               <h4 class="text-center"><strong>{{projectFeature?.featureTitle}}</strong></h4>
               <h6 class="text-center"><strong>{{projectFeature?.featureDescription}}</strong></h6>
@@ -147,7 +146,7 @@
                       <textarea type="text" id="newFeatureTaskDescription" class="form-control" mdbActive name="newFeatureTaskDescription" ngModel></textarea>
                       <label for="newFeatureTaskDescription">Enter Task Description:</label>
                       <button type="button" (click)="cancelAddTask(projectFeature)" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
-                      <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addFeatureTask(i, k, newFeatTask)" >Add Feature Task</button>
+                      <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addFeatureTask(i, k, newFeatTask)">Add Feature Task</button>
                   </div>
                 </form>
               </div>
@@ -163,12 +162,23 @@
           <div class="card storyCardStyle" *ngFor="let story of project.projectStory; let s = index">
             <h1 class="text-center">{{story?.storyTitle}}</h1>
             <div class="text-center">
+              <button *ngIf="!showUpdate" type="button" (click)="story.showAddStep = true" class="btn btn-outline-light-blue btn-sm" mdbRippleRadius>Add Step</button>
               <button *ngIf="showUpdate" type="button" (click)="story.showDelete = true" class="btn btn-danger btn-sm" mdbRippleRadius>Delete Story</button>
             </div>
             <div *ngIf="story.showDelete" class="alert alert-danger">
               <h5>Are you sure you want to delete story {{story?.storyTitle}}?</h5>
               <button class="btn btn-danger waves-light btn-sm" (click)="deleteStory(project, story, p, s)">Yes, Delete {{story?.storyTitle}}</button>
               <button class="btn btn-warning waves-light btn-sm" (click)="story.showDelete = false">Cancel</button>
+            </div>
+            <div *ngIf="story.showAddStep && !showUpdate">
+              <form #newStep="ngForm">
+                <div class="md-form">
+                    <textarea type="text" id="newStoryStep" class="form-control" mdbActive name="newStoryStep" ngModel></textarea>
+                    <label for="newStoryStep">Enter Story Step:</label>
+                    <button type="button" (click)="story.showAddStep = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addStoryStep(project, story, newFeatTask)">Add Story Step</button>
+                </div>
+              </form>
             </div>
             <ul>
               <li *ngFor="let storyStep of story.storyStep">

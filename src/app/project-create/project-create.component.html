@@ -98,7 +98,10 @@
               </div>
               <div *ngFor="let storyStep of storyCount.storyStep; let p = index">
                 <hr class="breakStyle" />
-                <h4 class="featureTaskHead">{{o + 1}}. Story Step-{{p + 1}}</h4>
+                <div class="md-form">
+                    <input type="number" id="{{storyStep?.stepOrderName}}" mdbActive class="form-control" name="{{storyStep?.stepOrderName}}" [(ngModel)]="storyStep.defaultStepOrder"/>
+                    <label for="{{storyStep?.stepOrderName}}">{{o + 1}}. Step Order-</label>
+                </div>
                 <div class="md-form">
                   <textarea type="text" id="{{storyStep?.storyInfo}}" class="form-control" mdbActive name="{{storyStep?.storyInfo}}" ngModel></textarea>
                   <label for="{{storyStep?.storyInfo}}">Enter Step Info:</label>

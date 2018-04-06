@@ -72,9 +72,20 @@ export class ProjectCreateComponent implements OnInit {
 
   addStoryStep(index) {
     this.storyStepCount++;
+    var newCount = 1;
+    if (this.projectStoryArr[index].storyStep.length > 0) {
+      var finalCount = this.projectStoryArr[index].storyStep[this.projectStoryArr[index].storyStep.length - 1];
+      newCount = finalCount.defaultStepOrder + 1
+    }
+
+    console.log(newCount);
+
     var storyStepObj = {
       storyInfo: "storyInfo" + this.storyStepCount,
+      stepOrderName: "stepOrder" + this.storyStepCount,
+      defaultStepOrder: newCount
     }
+
     this.projectStoryArr[index].storyStep.push(storyStepObj);
   }
 
@@ -154,9 +165,12 @@ export class ProjectCreateComponent implements OnInit {
 
       for (var n = 0; n < this.projectStoryArr[m].storyStep.length; n++) {
         var storyStepInfoVar = this.projectStoryArr[m].storyStep[n].storyInfo;
+        var storyOrderVar = this.projectStoryArr[m].storyStep[n].stepOrderName;
         var storyStepObj = {
-          storyInfo: storyInfo[storyStepInfoVar]
+          storyInfo: storyInfo[storyStepInfoVar],
+          order: storyInfo[storyOrderVar]
         };
+        console.log("storyObj", storyStepObj);
         storyStepInfo.push(storyStepObj);
       }
       var storyTitleInfo = this.projectStoryArr[m].storyTitle;

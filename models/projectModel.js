@@ -37,7 +37,8 @@ var projectSchema = mongoose.Schema({
         projectStory: [{
           storyTitle: String,
           storyStep: [{
-            storyInfo: String
+            storyInfo: String,
+            order: Number
           }]
         }],
         projectNotes: Array,
