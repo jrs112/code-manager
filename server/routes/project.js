@@ -24,7 +24,7 @@ router.get("/alluserprojects", function(req, res) {
     }
     // Or send the orders to the browser as a json object
     else {
-    res.json(orders);
+      res.json(orders);
     }
   });
 });
