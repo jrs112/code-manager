@@ -235,29 +235,35 @@ export class ProjectViewComponent implements OnInit {
       storyInfo: form.value.newStoryStep,
       order: form.value.newStoryOrder
     }
-    this.moveOrderArr.push(newStep);
-    this.moveOrder(story.storyStep, newStep);
-    this.projectApiService.updateProject(project._id, project)
-    .subscribe (
-      (data: any[]) => {
-        this.getAllProjects();
-        story.addStep = false;
+    if(newStep.order < 1) {
+      newStep.order = 1;
+    }
+    if (newStep.order > story.storyStep[story.storyStep.length - 1].order) {
+      newStep.order = story.storyStep[story.storyStep.length -1].order + 1;
+      story.storyStep.push(newStep);
+    } else {
+      this.moveOrderArr.push(newStep);
+      this.moveUpOrder(story.storyStep, newStep);
       }
-    )
-
-
+      this.projectApiService.updateProject(project._id, project)
+      .subscribe (
+        (data: any[]) => {
+          this.getAllProjects();
+          story.showAddStep = false;
+        }
+      )
   }
 
-  moveOrder(arr, num) {
+  moveUpOrder(arr, obj) {
     var gotDup = false;
     for (var i = 0; i < arr.length; i++) {
-        if (arr[i].order == num.order) {
+        if (arr[i].order == obj.order) {
           arr[i].order = arr[i].order + 1;
           var newValue = arr[i];
           this.moveOrderArr.push(arr[i]);
           arr.splice(i, 1);
           gotDup = true;
-          this.moveOrder(arr, newValue);
+          this.moveUpOrder(arr, newValue);
           break;
         }
     }
@@ -268,6 +274,26 @@ export class ProjectViewComponent implements OnInit {
       arr.sort(function(a, b) {
         return a.order - b.order
       });
+    }
+  }
+
+  deleteStoryStep(project, story, storyStep, projectIndex, storyIndex, stepIndex) {
+    story.storyStep.splice(stepIndex, 1);
+    this.moveDownOrder(story.storyStep, stepIndex);
+    console.log(story.storyStep);
+    this.projectApiService.updateProject(project._id, project)
+    .subscribe (
+      (data: any[]) => {
+        this.getAllProjects();
+      }
+    )
+
+  }
+
+  moveDownOrder(arr, startIndex) {
+    console.log(startIndex);
+    for (var i = startIndex; i < arr.length; i++) {
+      arr[i].order--;
     }
   }
 
@@ -338,6 +364,8 @@ export class ProjectViewComponent implements OnInit {
       (err) => console.log("error", err)
     )
   }
+
+
 
   updateFeature(projectIndex, featureIndex, feature) {
     var project = this.currentProjects[projectIndex];

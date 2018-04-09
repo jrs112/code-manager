@@ -185,8 +185,8 @@
               </form>
             </div>
             <ul>
-              <div *ngFor="let storyStep of story.storyStep">
-                {{storyStep?.order}}. {{storyStep?.storyInfo}}
+              <div *ngFor="let storyStep of story.storyStep; let q = index">
+                <h5>{{storyStep?.order}}. {{storyStep?.storyInfo}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteStoryStep(project, story, storyStep, p, s, q)">Delete Step</button></h5>
               </div>
             </ul>
           </div>

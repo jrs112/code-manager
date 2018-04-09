@@ -36,7 +36,9 @@ router.get("/alluserprojects", function(req, res) {
       console.log(info);
       console.log(req.params.id);
       Project.findByIdAndUpdate(req.params.id, {$set: info}, {new: true}, function(err, order) {
-        if (err) return handleError(err);
+        if (err) {
+          console.log(err)
+        }
         res.send(order);
       });
     });
@@ -47,7 +49,9 @@ router.get("/alluserprojects", function(req, res) {
       console.log("here is the info");
       console.log(info);
       Project.findByIdAndUpdate(req.params.id, {$push: info}, function(err, order) {
-        if (err) return handleError(err);
+        if (err) {
+          console.log(err);
+        }
         console.log("sending back order");
         res.send(order);
       });

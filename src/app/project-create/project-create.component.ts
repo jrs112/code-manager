@@ -180,6 +180,9 @@ export class ProjectCreateComponent implements OnInit {
       storyStepInfo.sort(function(a, b) {
         return a.order - b.order
       });
+      for (var p = 0; p < storyStepInfo.length; p++) {
+        storyStepInfo[p].order = p + 1;
+      }
       var projectStoryInfoObj = {
         storyTitle: storyInfo[storyTitleInfo],
         storyStep: storyStepInfo
