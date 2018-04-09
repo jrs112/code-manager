@@ -11,12 +11,14 @@ export class ProjectViewComponent implements OnInit {
   constructor(private projectApiService: ProjectApiService) { }
   allProjects = [];
   currentProjects = [];
+  moveOrderArr = [];
   showProjTaskForm = false;
   showFeatForm = false;
   showStoryForm = false;
   showStory = false;
   showUpdate = false;
   showDeleteProj = false;
+  defaultStepOrder = 1;
 
   ngOnInit() {
     this.getAllProjects();
@@ -215,6 +217,58 @@ export class ProjectViewComponent implements OnInit {
       },
       (error) => console.log(error)
       );
+  }
+
+  addStoryStep(story) {
+    console.log("story test", story);
+    if(story.storyStep.length > 0) {
+      var lastCount = story.storyStep[story.storyStep.length -1];
+      console.log("last count", lastCount);
+      this.defaultStepOrder = lastCount.order + 1;
+    }
+    story.showAddStep = true;
+  }
+
+  submitStoryStep(project, story, form) {
+    this.moveOrderArr = [];
+    var newStep = {
+      storyInfo: form.value.newStoryStep,
+      order: form.value.newStoryOrder
+    }
+    this.moveOrderArr.push(newStep);
+    this.moveOrder(story.storyStep, newStep);
+    this.projectApiService.updateProject(project._id, project)
+    .subscribe (
+      (data: any[]) => {
+        this.getAllProjects();
+        story.addStep = false;
+      }
+    )
+
+
+  }
+
+  moveOrder(arr, num) {
+    var gotDup = false;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].order == num.order) {
+          arr[i].order = arr[i].order + 1;
+          var newValue = arr[i];
+          this.moveOrderArr.push(arr[i]);
+          arr.splice(i, 1);
+          gotDup = true;
+          this.moveOrder(arr, newValue);
+          break;
+        }
+    }
+    if(!gotDup) {
+      for (var j = 0; j < this.moveOrderArr.length; j++) {
+        arr.push(this.moveOrderArr[j]);
+      }
+      arr.sort(function(a, b) {
+        return a.order - b.order
+      });
+    }
   }
 
   deleteProject(project) {

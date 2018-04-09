@@ -162,7 +162,7 @@
           <div class="card storyCardStyle" *ngFor="let story of project.projectStory; let s = index">
             <h1 class="text-center">{{story?.storyTitle}}</h1>
             <div class="text-center">
-              <button *ngIf="!showUpdate" type="button" (click)="story.showAddStep = true" class="btn btn-outline-light-blue btn-sm" mdbRippleRadius>Add Step</button>
+              <button *ngIf="!showUpdate" type="button" (click)="addStoryStep(story)" class="btn btn-outline-light-blue btn-sm" mdbRippleRadius>Add Step</button>
               <button *ngIf="showUpdate" type="button" (click)="story.showDelete = true" class="btn btn-danger btn-sm" mdbRippleRadius>Delete Story</button>
             </div>
             <div *ngIf="story.showDelete" class="alert alert-danger">
@@ -173,17 +173,21 @@
             <div *ngIf="story.showAddStep && !showUpdate">
               <form #newStep="ngForm">
                 <div class="md-form">
+                    <input type="number" id="newStoryOrder" mdbActive class="form-control" name="newStoryOrder" [(ngModel)]="defaultStepOrder"/>
+                    <label for="newStoryOrder">Step Order-</label>
+                </div>
+                <div class="md-form">
                     <textarea type="text" id="newStoryStep" class="form-control" mdbActive name="newStoryStep" ngModel></textarea>
                     <label for="newStoryStep">Enter Story Step:</label>
                     <button type="button" (click)="story.showAddStep = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
-                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addStoryStep(project, story, newFeatTask)">Add Story Step</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="submitStoryStep(project, story, newStep)">Add Story Step</button>
                 </div>
               </form>
             </div>
             <ul>
-              <li *ngFor="let storyStep of story.storyStep">
-                {{storyStep?.storyInfo}}
-              </li>
+              <div *ngFor="let storyStep of story.storyStep">
+                {{storyStep?.order}}. {{storyStep?.storyInfo}}
+              </div>
             </ul>
           </div>
         </div>
