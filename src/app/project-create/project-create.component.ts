@@ -8,7 +8,6 @@ import { ProjectApiService } from "../services/project-api.service";
   styleUrls: ['./project-create.component.scss']
 })
 export class ProjectCreateComponent implements OnInit {
-  errorMessage = "";
   projectTaskArr = [];
   projectFeatureArr = [];
   projectStoryArr = [];
@@ -19,6 +18,10 @@ export class ProjectCreateComponent implements OnInit {
   storyStepCount = 0;
   userInfo;
   showStory = false;
+  featureSaveErrMsg = "";
+  storySaveErrMsg = "";
+  projTitleSaveErrMsg = "";
+  showProjCreateMsg = false;
 
   constructor(private userApiService: UserApiService, private projectApiService: ProjectApiService) { }
 
@@ -32,6 +35,7 @@ export class ProjectCreateComponent implements OnInit {
         (error) => console.log(error)
         );
   }
+
 
   addProjTask() {
     this.projectTaskCount++
@@ -109,10 +113,19 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   createProject(project, feature, story) {
+    this.showProjCreateMsg = false;
+    this.featureSaveErrMsg = "";
+    this.storySaveErrMsg = "";
+    this.projTitleSaveErrMsg = "";
 
     var projectInfo = project.value;
     var featureInfo = feature.value;
     var storyInfo = story.value;
+
+    if (projectInfo.projectTitle == '' || projectInfo.projectTitle == null) {
+      this.projTitleSaveErrMsg = "You must enter a project title to save the project";
+      return;
+    }
 
     //Set variable for project task info
     var projectTaskInfo = [];
@@ -127,7 +140,11 @@ export class ProjectCreateComponent implements OnInit {
         taskTitle: projectInfo[projectTaskTitle],
         taskDescription: projectInfo[projectTaskDescription]
       }
+      if((projectTaskInfoObj.taskTitle == '' || projectTaskInfoObj.taskTitle == null) && (projectTaskInfoObj.taskDescription == '' || projectTaskInfoObj.taskDescription == null)) {
+        console.log("nothing entered");
+      } else {
       projectTaskInfo.push(projectTaskInfoObj);
+      }
     }
 
 
@@ -145,7 +162,11 @@ export class ProjectCreateComponent implements OnInit {
           featureTaskDescription: featureInfo[featureTaskDescriptionInfo]
         }
 
-        featureTaskInfo.push(featureTaskInfoObj);
+        if((featureTaskInfoObj.featureTaskTitle == '' || featureTaskInfoObj.featureTaskTitle == null) && (featureTaskInfoObj.featureTaskDescription == '' || featureTaskInfoObj.featureTaskDescription == null)) {
+          console.log("nothing entered");
+        } else {
+          featureTaskInfo.push(featureTaskInfoObj);
+        }
       }
       var featureTitleInfo = this.projectFeatureArr[j].featureTitle;
       var featureDescriptionInfo = this.projectFeatureArr[j].featureDescription;
@@ -155,7 +176,14 @@ export class ProjectCreateComponent implements OnInit {
         featureDescription: featureInfo[featureDescriptionInfo],
         featureTask: featureTaskInfo
       }
-      projectFeatureInfo.push(projectFeatureInfoObj);
+        if((projectFeatureInfoObj.featureTitle == '' || projectFeatureInfoObj.featureTitle == null) && (projectFeatureInfoObj.featureDescription == '' || projectFeatureInfoObj.featureDescription == null)) {
+          if (projectFeatureInfoObj.featureTask.length > 0) {
+            this.featureSaveErrMsg = "You have tasks assigned to a feature without a title.  Add a title to the feature to save the project.";
+            return;
+          }
+        } else {
+          projectFeatureInfo.push(projectFeatureInfoObj);
+      }
     }
 
     //Set Variable for project story Info
@@ -171,8 +199,11 @@ export class ProjectCreateComponent implements OnInit {
           order: storyInfo[storyOrderVar]
         };
         console.log("storyObj", storyStepObj);
-
-        storyStepInfo.push(storyStepObj);
+        if(storyStepObj.storyInfo == '' || storyStepObj.storyInfo == null) {
+          console.log("Nothing Entered");
+        } else {
+          storyStepInfo.push(storyStepObj);
+        }
       }
       var storyTitleInfo = this.projectStoryArr[m].storyTitle;
 
@@ -187,9 +218,14 @@ export class ProjectCreateComponent implements OnInit {
         storyTitle: storyInfo[storyTitleInfo],
         storyStep: storyStepInfo
       };
-
-      projectStoryInfo.push(projectStoryInfoObj);
-
+      if (projectStoryInfoObj.storyTitle == '' || projectStoryInfoObj.storyTitle == null) {
+        if(projectStoryInfoObj.storyStep.length > 0) {
+          this.storySaveErrMsg = "You have entered steps for a sequence that has no title.  Please enter a title for the sequence to save the project."
+          return;
+        }
+      } else {
+        projectStoryInfo.push(projectStoryInfoObj);
+      }
     }
 
     console.log(this.userInfo._id);
@@ -208,7 +244,19 @@ export class ProjectCreateComponent implements OnInit {
     this.projectApiService.createProject(projectObj)
     .subscribe(info => {
       console.log("project info", info);
-
+      this.projectTaskArr = [];
+      this.projectFeatureArr = [];
+      this.projectStoryArr = [];
+      this.projectTaskCount = 0;
+      this.projectFeatureCount = 0;
+      this.featureTaskCount = 0;
+      this.projectStoryCount = 0;
+      this.storyStepCount = 0;
+      this.showStory = false;
+      this.featureSaveErrMsg = "";
+      this.storySaveErrMsg = "";
+      this.projTitleSaveErrMsg = "";
+      this.showProjCreateMsg = true;
       },
     (err) =>  {
       console.log("error: ", err)

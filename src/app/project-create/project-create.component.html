@@ -32,13 +32,7 @@
                 </div>
                 <hr class="breakStyle" />
             </div>
-            <div *ngIf="errorMessage != ''">
-              <div class="alert alert-danger text-center">
-                {{errorMessage}}
-              </div>
-            </div>
           </form>
-          <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k, n)" mdbRippleRadius>Create Project</button>
         </div>
       </div>
     </div>
@@ -103,7 +97,7 @@
                     <label for="{{storyStep?.stepOrderName}}">{{o + 1}}. Step Order-</label>
                 </div>
                 <div class="md-form">
-                  <textarea type="text" id="{{storyStep?.storyInfo}}" class="form-control" mdbActive name="{{storyStep?.storyInfo}}" ngModel></textarea>
+                  <textarea type="text" id="{{storyStep?.storyInfo}}" class="form-control" mdbActive name="{{storyStep?.storyInfo}}" ngModel autofocus></textarea>
                   <label for="{{storyStep?.storyInfo}}">Enter Step Info:</label>
                 </div>
                 <button type="button" (click)="removeStoryStep(o, p)" class="btn btn-outline-danger btn-rounded btn-sm" mdbRippleRadius>Remove Step</button>
@@ -111,6 +105,27 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-8 text-center">
+      <div class="card createProjCardStyle">
+        <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k, n)" mdbRippleRadius>Create Project</button>
+        <div *ngIf="showProjCreateMsg == true">
+          <div class="alert alert-success text-center">
+            Your project was created successfully! <button type="button" class="btn btn-indigo waves-light btn-sm" mdbRippleRadius routerLink="/viewallprojects">View Your Projects</button>
+          </div>
+        </div>
+        <div *ngIf="projTitleSaveErrMsg != ''" class="alert alert-danger text-center">
+          {{projTitleSaveErrMsg}}
+        </div>
+        <div *ngIf="featureSaveErrMsg != ''" class="alert alert-danger text-center">
+          {{featureSaveErrMsg}}
+        </div>
+        <div *ngIf="storySaveErrMsg != ''" class="alert alert-danger text-center">
+          {{storySaveErrMsg}}
+        </div>
       </div>
     </div>
   </div>
