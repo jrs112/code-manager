@@ -104,11 +104,16 @@ export class ProjectViewComponent implements OnInit {
 
   updateProjTitle(projIndex, titleForm) {
     var updateObj = this.currentProjects[projIndex];
-    if(titleForm.value.newProjTitle != '' && titleForm.value.newProjTitle != null) {
-      updateObj.projectTitle = titleForm.value.newProjTitle
-    }
-    if(titleForm.value.newProjDescription != '' && titleForm.value.newProjDescription != null) {
-      updateObj.projectDescription = titleForm.value.newProjDescription;
+    if ((titleForm.value.newProjTitle == '' || titleForm.value.newProjTitle == null) && (titleForm.value.newProjDescription == '' || titleForm.value.newProjDescription == null)) {
+      console.log('nothing');
+      return;
+    } else {
+      if(titleForm.value.newProjTitle != '' && titleForm.value.newProjTitle != null) {
+        updateObj.projectTitle = titleForm.value.newProjTitle
+      }
+      if(titleForm.value.newProjDescription != '' && titleForm.value.newProjDescription != null) {
+        updateObj.projectDescription = titleForm.value.newProjDescription;
+      }
     }
     this.projectApiService.updateProject(updateObj._id, updateObj)
     .subscribe(
@@ -154,6 +159,10 @@ export class ProjectViewComponent implements OnInit {
       featureTaskTitle: form.value.newFeatureTaskTitle,
       featureTaskDescription: form.value.newFeatureTaskDescription
     }
+    if ((newTaskObj.featureTaskTitle == '' || newTaskObj.featureTaskTitle == null) && (newTaskObj.featureTaskDescription == '' || newTaskObj.featureTaskDescription == null)) {
+      console.log('nothing');
+      return;
+    }
     updateObj.projectFeature[featureIndex].featureTask.push(newTaskObj);
     this.projectApiService.updateProject(updateObj._id, updateObj)
     .subscribe(
@@ -170,6 +179,10 @@ export class ProjectViewComponent implements OnInit {
     var newTaskObj = {
       taskTitle: form.value.newProjTaskTitle,
       taskDescription: form.value.newProjTaskDescription
+    }
+    if ((newTaskObj.taskTitle == '' || newTaskObj.taskTitle == null) && (newTaskObj.taskDescription == '' || newTaskObj.taskDescription == null)) {
+      console.log('nothing');
+      return;
     }
     updateObj.projectTask.push(newTaskObj);
     this.projectApiService.updateProject(updateObj._id, updateObj)
@@ -189,7 +202,11 @@ export class ProjectViewComponent implements OnInit {
       featureTitle: form.value.newFeatTitle,
       featureDescription: form.value.newFeatDescription
     };
-    updateObj.projectFeature.push(newFeatObj)
+    if ((newFeatObj.featureTitle == '' || newFeatObj.featureTitle == null) && (newFeatObj.featureDescription == '' || newFeatObj.featureDescription == null)) {
+      console.log('nothing');
+      return;
+    }
+    updateObj.projectFeature.push(newFeatObj);
     this.projectApiService.updateProject(updateObj._id, updateObj)
     .subscribe(
       (data: any[]) => {
@@ -206,6 +223,10 @@ export class ProjectViewComponent implements OnInit {
     var newStoryObj = {
       storyTitle: form.value.newStoryTitle
     };
+    if (newStoryObj.storyTitle == '' || newStoryObj.storyTitle == null) {
+      console.log('nothing');
+      return;
+    }
     updateObj.projectStory.push(newStoryObj);
     this.projectApiService.updateProject(updateObj._id, updateObj)
     .subscribe(
@@ -237,6 +258,10 @@ export class ProjectViewComponent implements OnInit {
     }
     if(newStep.order < 1) {
       newStep.order = 1;
+    }
+    if (newStep.storyInfo == '' || newStep.storyInfo == null) {
+      console.log('nothing');
+      return;
     }
     if (newStep.order > story.storyStep[story.storyStep.length - 1].order) {
       newStep.order = story.storyStep[story.storyStep.length -1].order + 1;
@@ -369,8 +394,18 @@ export class ProjectViewComponent implements OnInit {
 
   updateFeature(projectIndex, featureIndex, feature) {
     var project = this.currentProjects[projectIndex];
-    project.projectFeature[featureIndex].featureTitle = feature.value.upFeatureTitle;
-    project.projectFeature[featureIndex].featureDescription = feature.value.upFeatureDescription;
+    if ((feature.value.upFeatureTitle == '' || feature.value.upFeatureTitle == null) && (feature.value.upFeatureDescription == '' || feature.value.upFeatureDescription == null)) {
+      console.log('nothing');
+      return;
+    } else {
+      if (feature.value.upFeatureTitle != '' && feature.value.upFeatureTitle != null){
+        project.projectFeature[featureIndex].featureTitle = feature.value.upFeatureTitle;
+      }
+      if (feature.value.upFeatureDescription != '' && feature.value.upFeatureDescription != null){
+        project.projectFeature[featureIndex].featureDescription = feature.value.upFeatureDescription;
+      }
+    }
+
     this.projectApiService.updateProject(project._id, project)
     .subscribe(
       (info: any[]) => {
