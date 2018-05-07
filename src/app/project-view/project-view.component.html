@@ -6,8 +6,10 @@
           <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
           <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = false" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
           <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Story</button>
-          <button *ngIf="showUpdate && isActive(allProject)" (click)="showUpdate = false" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
-          <button *ngIf="!showUpdate && isActive(allProject)" (click)="showUpdate = true" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
+          <button *ngIf="showAdd && isActive(allProject)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
+          <button *ngIf="!showAdd && isActive(allProject)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
+          <button *ngIf="showUpdate && isActive(allProject)" (click)="updateDisplay(false, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
+          <button *ngIf="!showUpdate && isActive(allProject)" (click)="updateDisplay(true, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
         </div>
       </div>
     </div>
@@ -44,10 +46,10 @@
               </form>
             </div>
             <div class="text-center">
-                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatureForm()">Add Feature</button>
-                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-info waves-light btn-sm" mdbRippleRadius (click)="showStoryFrm()">Add Story</button>
+                <button *ngIf="!showUpdate && showAdd" type="button" class="btn btn-outline-indigo btn-sm" mdbRippleRadius (click)="showFeatureForm()">Add Feature</button>
+                <button *ngIf="!showUpdate && showAdd" type="button" class="btn btn-outline-info waves-light btn-sm" mdbRippleRadius (click)="showStoryFrm()">Add Story</button>
             </div>
-            <div *ngIf="showFeatForm && !showUpdate">
+            <div *ngIf="showFeatForm && !showUpdate && showAdd">
               <form #newProjFeat="ngForm">
                 <div class="md-form">
                     <input type="text" id="newFeatTitle" class="form-control" mdbActive name="newFeatTitle" ngModel>
@@ -61,7 +63,7 @@
                 </div>
               </form>
             </div>
-            <div *ngIf="showStoryForm && !showUpdate">
+            <div *ngIf="showStoryForm && !showUpdate && showAdd">
               <form #newProjStory="ngForm">
                 <div class="md-form">
                     <input type="text" id="newStoryTitle" class="form-control" mdbActive name="newStoryTitle" ngModel>
@@ -84,9 +86,9 @@
               </li>
             </ul>
             <div>
-                <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add General Task</button>
+                <button *ngIf="!showUpdate && showAdd" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="showProjTaskForm = !showProjTaskForm">Add General Task</button>
             </div>
-            <div *ngIf="showProjTaskForm && !showUpdate">
+            <div *ngIf="showProjTaskForm && !showUpdate && showAdd">
               <form #newProjTask="ngForm">
                 <div class="md-form">
                     <input type="text" id="newProjTaskTitle" class="form-control" mdbActive name="newProjTaskTitle" ngModel>
@@ -135,8 +137,8 @@
                   <h6><del>{{featureTask?.featureTaskDescription}}</del></h6>
                 </li>
               </ul>
-              <button *ngIf="!showUpdate" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="addFeatTaskForm(projectFeature)">Add Task</button>
-              <div *ngIf="projectFeature.addTask && !showUpdate">
+              <button *ngIf="!showUpdate && showAdd" type="button" class="btn btn-outline-success btn-sm addFeatTaskBtn" mdbRippleRadius (click)="addFeatTaskForm(projectFeature)">Add Task</button>
+              <div *ngIf="projectFeature.addTask && !showUpdate && showAdd">
                 <form #newFeatTask="ngForm">
                   <div class="md-form">
                       <input type="text" id="newFeatureTaskTitle" class="form-control" mdbActive name="newFeatureTaskTitle" ngModel>
@@ -162,7 +164,7 @@
           <div class="card storyCardStyle" *ngFor="let story of project.projectStory; let s = index">
             <h1 class="text-center">{{story?.storyTitle}}</h1>
             <div class="text-center">
-              <button *ngIf="!showUpdate" type="button" (click)="addStoryStep(story)" class="btn btn-outline-light-blue btn-sm" mdbRippleRadius>Add Step</button>
+              <button *ngIf="!showUpdate && showAdd" type="button" (click)="addStoryStep(story)" class="btn btn-outline-light-blue btn-sm" mdbRippleRadius>Add Step</button>
               <button *ngIf="showUpdate" type="button" (click)="story.showDelete = true" class="btn btn-danger btn-sm" mdbRippleRadius>Delete Story</button>
             </div>
             <div *ngIf="story.showDelete" class="alert alert-danger">
@@ -186,7 +188,7 @@
             </div>
             <ul>
               <div *ngFor="let storyStep of story.storyStep; let q = index">
-                <h5>{{storyStep?.order}}. {{storyStep?.storyInfo}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteStoryStep(project, story, storyStep, p, s, q)">Delete Step</button></h5>
+                <h5><strong>{{storyStep?.order}}.)</strong> {{storyStep?.storyInfo}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteStoryStep(project, story, storyStep, p, s, q)">Delete Step</button></h5>
               </div>
             </ul>
           </div>

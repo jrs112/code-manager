@@ -4,6 +4,7 @@ import { UserCreateComponent } from "./user-create/user-create.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProjectCreateComponent } from "./project-create/project-create.component";
 import { ProjectViewComponent } from "./project-view/project-view.component";
+import { SessionViewComponent } from "./session-view/session-view.component";
 
 export const routes: Routes = [
 
@@ -27,6 +28,10 @@ export const routes: Routes = [
   {
     path: 'viewallprojects',
     component: ProjectViewComponent
+  },
+  {
+    path: 'sessionview',
+    component: SessionViewComponent
   },
   {
     path: '',

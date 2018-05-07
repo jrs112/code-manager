@@ -73,6 +73,8 @@ router.get("/alluserprojects", function(req, res) {
 
     // Remove project feature
 router.put("/removeprojectfeature", function(req, res) {
+  console.log("getting to delete route");
+  console.log("req.body info", req.body);
     Project.update({"_id": req.body._id}, {"$pull": {"projectFeature": {_id: req.body.featureId}}},function(err, data) {
       if(err) {
         console.log(err);

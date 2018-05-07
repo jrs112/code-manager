@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div class="card defaultCardStyle">
+        <h3 class="text-center">Add Tasks to Session</h3>
+        <div class="md-form">
+          <input (keyup)="onInput($event)" class="searchInputStyle" type="text" [(ngModel)]="taskSearchInput" id="taskSearchInput" (focus)="searchFocus()" mdbActive />
+          <label for="taskSearchInput">Search incomplete tasks</label>
+          <small *ngIf="taskSearchResultsArr.length != 0" class="cancelSearchStyle" (click)="cancelSearch()">Clear</small>
+          <div class="card taskSearchCardStyle" *ngFor="let task of taskSearchResultsArr" (click)="addTask(task)">
+            <h5 class="text-center">{{task.taskTitle}}</h5>
+            <h6 class="text-center">{{task.taskDescription}}</h6>
+            <small>{{task.projectTitle}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card defaultCardStyle">
+        <h3 *ngIf="selectedTaskArr.length != 0" class="text-center">Added Tasks</h3>
+        <h3 *ngIf="selectedTaskArr.length === 0" class="text-center">No Tasks Have Been Added</h3>
+        <ul>
+          <li *ngFor="let task of selectedTaskArr">
+            <div>{{task.taskTitle}}</div>
+            <div>{{task.taskDescription}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

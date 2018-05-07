@@ -16,6 +16,7 @@ import { ProjectApiService } from "./services/project-api.service";
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProjectCreateComponent } from './project-create/project-create.component';
 import { ProjectViewComponent } from './project-view/project-view.component';
+import { SessionViewComponent } from './session-view/session-view.component';
 
 
 
@@ -27,7 +28,8 @@ import { ProjectViewComponent } from './project-view/project-view.component';
     DashboardComponent,
     NavMenuComponent,
     ProjectCreateComponent,
-    ProjectViewComponent
+    ProjectViewComponent,
+    SessionViewComponent
   ],
   imports: [
     BrowserModule,

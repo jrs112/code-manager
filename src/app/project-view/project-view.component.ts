@@ -17,12 +17,18 @@ export class ProjectViewComponent implements OnInit {
   showStoryForm = false;
   showStory = false;
   showUpdate = false;
+  showAdd = false;
   showDeleteProj = false;
   defaultStepOrder = 1;
 
   ngOnInit() {
     this.getAllProjects();
 
+  }
+
+  updateDisplay(updateBool: boolean, addBool: boolean) {
+    this.showUpdate = updateBool;
+    this.showAdd = addBool;
   }
 
   showFeatureForm() {
@@ -52,6 +58,7 @@ export class ProjectViewComponent implements OnInit {
     this.currentProjects = [];
     this.showStory = false;
     this.showUpdate = false;
+    this.showAdd = false;
     this.currentProjects.push(selectedProject);
     console.log(this.currentProjects);
     for (var i = 0; i < this.currentProjects.length; i++) {
@@ -242,6 +249,7 @@ export class ProjectViewComponent implements OnInit {
 
   addStoryStep(story) {
     console.log("story test", story);
+    this.defaultStepOrder = 1;
     if(story.storyStep.length > 0) {
       var lastCount = story.storyStep[story.storyStep.length -1];
       console.log("last count", lastCount);
@@ -263,7 +271,7 @@ export class ProjectViewComponent implements OnInit {
       console.log('nothing');
       return;
     }
-    if (newStep.order > story.storyStep[story.storyStep.length - 1].order) {
+    if (story.storyStep.length > 0 && newStep.order > story.storyStep[story.storyStep.length - 1].order) {
       newStep.order = story.storyStep[story.storyStep.length -1].order + 1;
       story.storyStep.push(newStep);
     } else {
@@ -356,9 +364,10 @@ export class ProjectViewComponent implements OnInit {
 
   deleteFeature(project, feature, projectIndex, featureIndex) {
     var deleteFeatureObj = {
-      id: project._id,
+      _id: project._id,
       featureId: feature._id
     }
+    console.log("delete obj:, ", deleteFeatureObj);
     this.projectApiService.deleteFeature(deleteFeatureObj)
     .subscribe(
       (deleteInfo: any[]) => {
