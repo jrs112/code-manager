@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <div class="list-group listGroupStyle">
+        <div (click)="addGoal()" class="list-group-item listStyle pointerStyle text-center" [ngClass]="{'clickedClass': showAddGoal }">
+          <h3><strong>Add Goal</strong></h3>
+        </div>
+        <div *ngFor="let allGoals of allGoals" (click)="selectCurrentGoal(allGoals)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allGoals) }">
+          <h3 class="text-center"><strong>{{allGoals?.projectTitle}}</strong></h3>
+          <button *ngIf="showAdd && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
+          <button *ngIf="!showAdd && isActive(allGoals)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
+          <button *ngIf="showUpdate && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
+          <button *ngIf="!showUpdate && isActive(allGoals)" (click)="updateDisplay(true, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-9">
+      <div *ngIf="showAddGoal" class="card defaultCardStyle mx-auto">
+        <app-goal-create></app-goal-create>
+      </div>
+    </div>
+  </div>
+</div>

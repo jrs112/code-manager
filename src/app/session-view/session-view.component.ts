@@ -74,21 +74,47 @@ export class SessionViewComponent implements OnInit {
         }
       )
     }
-    this.taskSearchResultsArr = this.incompleteTaskArr;
+    const searchArr = this.incompleteTaskArr;
+    this.taskSearchResultsArr = searchArr;
   }
 
   addTask(task) {
-    console.log("getting to this function")
+    console.log("start: ", this.incompleteTaskArr);
     //function for selecting tags to add or remove them to the selected interest array
-  for (var i = 0; i < this.selectedTaskArr.length; i++) {
-    if (task == this.selectedTaskArr[i]) {
-      var newSelectArray = this.selectedTaskArr.filter((index) => index != task);
-      this.selectedTaskArr = newSelectArray;
-      return;
+
+    for (var j = 0; j < this.incompleteTaskArr.length; j++) {
+      // console.log("from array: ", this.incompleteTaskArr[j].taskTitle);
+      // console.log("task: ", task.taskTitle);
+      console.log("right before conditional", this.incompleteTaskArr);
+      if (this.incompleteTaskArr[j].taskId === task.taskId) {
+        console.log(this.incompleteTaskArr);
+        this.incompleteTaskArr.splice(j, 1);
+        this.selectedTaskArr.push(task);
+      }
+    }
+
+  for (var i = 0; i < this.taskSearchResultsArr.length; i++) {
+    if (this.taskSearchResultsArr[i] == task) {
+      this.taskSearchResultsArr.splice(i, 1);
+
     }
   }
-  this.selectedTaskArr.push(task);
-  this.setSearchArr();
+  console.log("after first function: ", this.incompleteTaskArr);
+
+
+  }
+
+  removeTask(task) {
+    for (var i = 0; i < this.selectedTaskArr.length; i++) {
+      if (task == this.selectedTaskArr[i]) {
+        this.taskSearchInput = "";
+        this.selectedTaskArr.splice(i, 1);
+
+        this.incompleteTaskArr.push(task);
+        this.setSearchArr();
+        return;
+      }
+    }
   }
 
   //function being ran during each event like a keystrok in the search input field.

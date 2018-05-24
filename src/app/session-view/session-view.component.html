@@ -20,10 +20,11 @@
         <h3 *ngIf="selectedTaskArr.length != 0" class="text-center">Added Tasks</h3>
         <h3 *ngIf="selectedTaskArr.length === 0" class="text-center">No Tasks Have Been Added</h3>
         <ul>
-          <li *ngFor="let task of selectedTaskArr">
-            <div>{{task.taskTitle}}</div>
-            <div>{{task.taskDescription}}</div>
-          </li>
+          <div class="card selectedTaskStyle" *ngFor="let task of selectedTaskArr" (click)="removeTask(task)">
+            <h5 class="text-center">{{task.taskTitle}}</h5>
+            <h6 class="text-center">{{task.taskDescription}}</h6>
+            <small>{{task.projectTitle}}</small>
+          </div>
         </ul>
       </div>
     </div>

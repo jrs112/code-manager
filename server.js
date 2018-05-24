@@ -45,6 +45,7 @@ let response = {
 // API file for interacting with MongoDB
 const auth = require("./server/routes/auth");
 const projectRoute = require("./server/routes/project");
+const goalRoute = require("./server/routes/goal");
 
 
 // Parsers
@@ -53,7 +54,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({extended: false}));
 
 // required for passport
-app.use(session({ secret: 'robsgarageistheshiz112',
+app.use(session({ secret: process.env.SessionPass,
                   saveUninitialized: true,
                   resave: true})); // session secret
 app.use(passport.initialize());
@@ -73,6 +74,7 @@ app.use(function(req, res, next) {
 
 app.use("/auth", auth);
 app.use("/dataproject", projectRoute);
+app.use("/datagoal", goalRoute);
 require('./server/config/passport.js')(passport);
 
 

@@ -13,10 +13,13 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserApiService } from "./services/user-api.service";
 import { ProjectApiService } from "./services/project-api.service";
+import { GoalApiService } from "./services/goal-api.service";
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProjectCreateComponent } from './project-create/project-create.component';
 import { ProjectViewComponent } from './project-view/project-view.component';
 import { SessionViewComponent } from './session-view/session-view.component';
+import { GoalViewComponent } from './goal-view/goal-view.component';
+import { GoalCreateComponent } from './goal-create/goal-create.component';
 
 
 
@@ -29,7 +32,9 @@ import { SessionViewComponent } from './session-view/session-view.component';
     NavMenuComponent,
     ProjectCreateComponent,
     ProjectViewComponent,
-    SessionViewComponent
+    SessionViewComponent,
+    GoalViewComponent,
+    GoalCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,7 @@ import { SessionViewComponent } from './session-view/session-view.component';
     RouterModule.forRoot(routes)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [UserApiService, ProjectApiService],
+  providers: [UserApiService, ProjectApiService, GoalApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

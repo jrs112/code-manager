@@ -12,6 +12,20 @@
   border-top-style: solid;
   border-top-width: 2px;
   cursor: pointer;
+
+  &:hover {
+    color: black;
+    background-color: rgba(38,84,79,.5);
+    border-top-color: rgb(157,165,159);
+    border-top-width: 2px;
+    border-top-style: 2px;
+  }
+  &::after {
+    content: "Add";
+    color:white;
+    text-align: center;
+    font-weight: bold;
+  }
 }
 
 .searchInputStyle {
@@ -22,4 +36,28 @@
   color: red;
   cursor: pointer;
   margin-bottom: 10px;
+}
+
+.selectedTaskStyle {
+  padding: 10px;
+  border-top-color: green;
+  border-top-style: solid;
+  border-top-width: 2px;
+  cursor: pointer;
+  background-color: rgba(255,0,2,0);
+
+  &:hover {
+    color: black;
+    background-color: rgba(255,0,2,.5);
+    border-top-color: rgb(157,165,159);
+    border-top-width: 2px;
+    border-top-style: 2px;
+  }
+  &::after {
+    content: "Remove";
+    color:white;
+    text-align: center;
+    font-weight: bold;
+  }
+
 }

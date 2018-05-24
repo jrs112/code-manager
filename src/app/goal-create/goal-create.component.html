@@ -1,0 +1,21 @@
+<h2 class="text-center">Create Goal</h2>
+<form #newGoal="ngForm">
+  <div class="md-form">
+      <input type="text" id="newGoalTitle" class="form-control" mdbActive name="newGoalTitle" ngModel>
+      <label for="newProjTitle">Goal Title</label>
+  </div>
+  <div *ngFor="let taskCount of goalTaskArr; let i = index">
+    <hr class="breakStyle" />
+    <br />
+    <div class="md-form">
+      <input type="text" id="{{taskCount?.taskTitle}}" class="form-control" mdbActive name="{{taskCount?.taskTitle}}" ngModel />
+      <label for="{{taskCount?.taskTitle}}">Task Title</label>
+    </div>
+    <div class="md-form">
+      <textarea type="text" id="{{taskCount?.taskDescription}}" class="form-control" mdbActive name="{{taskCount?.taskDescription}}" ngModel></textarea>
+      <label for="{{taskCount?.taskDescription}}">Task Description</label>
+    </div>
+  </div>
+  <button type="button" class="btn btn-elegant waves-light btn-sm" mdbRippleRadius (click)="addGoalTask()" >Add Another Task</button>
+</form>
+<button type="button" class="btn btn-primary waves-light btn-block submitBtnStyle" mdbRippleRadius (click)="createGoal(newGoal)">Submit</button>

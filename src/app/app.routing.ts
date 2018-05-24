@@ -5,6 +5,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProjectCreateComponent } from "./project-create/project-create.component";
 import { ProjectViewComponent } from "./project-view/project-view.component";
 import { SessionViewComponent } from "./session-view/session-view.component";
+import { GoalViewComponent } from "./goal-view/goal-view.component";
 
 export const routes: Routes = [
 
@@ -28,6 +29,10 @@ export const routes: Routes = [
   {
     path: 'viewallprojects',
     component: ProjectViewComponent
+  },
+  {
+    path: 'goalsview',
+    component: GoalViewComponent
   },
   {
     path: 'sessionview',
