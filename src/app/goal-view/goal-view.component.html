@@ -7,8 +7,8 @@
         </div>
         <div *ngFor="let allGoals of allGoals" (click)="selectCurrentGoal(allGoals)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allGoals) }">
           <h3 class="text-center"><strong>{{allGoals?.goalTitle}}</strong></h3>
-          <button *ngIf="showAdd && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
-          <button *ngIf="!showAdd && isActive(allGoals)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
+          <button *ngIf="showGoalTaskForm && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
+          <button *ngIf="!showGoalTaskForm && isActive(allGoals)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
           <button *ngIf="showUpdate && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
           <button *ngIf="!showUpdate && isActive(allGoals)" (click)="updateDisplay(true, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Update</button>
         </div>
@@ -17,6 +17,62 @@
     <div class="col-9">
       <div *ngIf="showAddGoal" class="card defaultCardStyle mx-auto">
         <app-goal-create></app-goal-create>
+      </div>
+      <div *ngIf="currentGoals.length === 0 &&  !showAddGoal">
+        <div class="card defaultCardStyle text-center mx-auto">
+          <h1>Select A Goal On The Left</h1>
+        </div>
+      </div>
+      <div *ngIf="currentGoals.length > 0">
+        <div *ngFor="let goal of currentGoals; let i = index">
+          <div class="card defaultCardStyle mx-auto">
+            <h1 class="text-center"><strong>{{goal?.goalTitle}}</strong></h1>
+            <div *ngIf="showUpdate">
+              <div class="text-center">
+                <button type="button" class="btn btn-danger waves-light btn-sm" (click)="showDeleteGoal = true">Delete Goal</button>
+                <div *ngIf="showDeleteGoal" class="alert alert-danger">
+                  <h5>Are you sure you want to delete {{goal?.goalTitle}}?</h5>
+                  <button class="btn btn-danger waves-light btn-sm" (click)="deleteGoal(goal)">Yes, Delete {{goal?.goalTitle}}</button>
+                  <button class="btn btn-warning waves-light btn-sm" (click)="showDeleteGoal = false">Cancel</button>
+                </div>
+              </div>
+              <form #newGoalTitle="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newGoalTitle" class="form-control" mdbActive name="newGoalTitle" ngModel>
+                    <label for="newGoalTitle">Update Goal Title:</label>
+                </div>
+                <div class="md-form">
+                    <button type="button" class="btn btn-warning waves-light btn-sm" mdbRippleRadius (click)="updateGoalTitle(i, newGoalTitle)">Update Goal Title</button>
+                </div>
+              </form>
+            </div>
+            <ul *ngFor="let goalTask of goal.goalTask; let j = index">
+              <li class="pointerStyle" *ngIf="!goalTask.taskCompleted" (click)="updateGoalTask(i, j, true)">
+                <h5>{{goalTask?.taskTitle}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteGoalTask(goal, goalTask, i, j)">Delete Task</button></h5>
+                <h6>{{goalTask?.taskDescription}}</h6>
+              </li>
+              <li class="pointerStyle" *ngIf="goalTask.taskCompleted" (click)="updateGoalTask(i, j, false)">
+                <h5><del>{{goalTask?.taskTitle}}</del><button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteGoalTask(goal, goalTask, i, j)">Delete Task</button></h5>
+                <h6><del>{{goalTask?.taskDescription}}</del></h6>
+              </li>
+            </ul>
+            <div *ngIf="showGoalTaskForm && !showUpdate">
+              <form #newGoalTask="ngForm">
+                <div class="md-form">
+                    <input type="text" id="newGoalTaskTitle" class="form-control" mdbActive name="newGoalTaskTitle" ngModel>
+                    <label for="newGoalTaskTitle">Enter Task Title:</label>
+                </div>
+                <div class="md-form">
+                    <textarea type="text" id="newGoalTaskDescription" class="form-control" mdbActive name="newGoalTaskDescription" ngModel></textarea>
+                    <label for="newGoalTaskDescription">Enter Task Description:</label>
+                    <button type="button" (click)="showGoalTaskForm = false" class="btn btn-danger btn-rounded btn-sm" mdbRippleRadius>Cancel</button>
+                    <button type="button" class="btn btn-deep-purple waves-light btn-sm" mdbRippleRadius (click)="addGoalTask(i, newGoalTask)">Add Goal Task</button>
+                </div>
+              </form>
+            </div>
+            <hr />
+          </div>
+        </div>
       </div>
     </div>
   </div>

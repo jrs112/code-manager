@@ -18,16 +18,18 @@ export class GoalApiService {
     return this.http.get("/datagoal/allusergoals");
   }
 
-  updateProject(id, info) {
-    return this.http.put("/dataproject/updateproject/" + id, info);
+  deleteGoal(info) {
+    return this.http.post("/datagoal/deletegoal", info);
   }
 
-  deleteProject(info) {
-    return this.http.post("/dataproject/deleteproject", info);
+  updateGoal(id, info) {
+    return this.http.put("/datagoal/updategoal/" + id, info);
   }
 
-  deleteProjectTask(info) {
-    return this.http.put("/dataproject/removeprojecttask", info);
+
+
+  deleteGoalTask(info) {
+    return this.http.put("/datagoal/removegoaltask", info);
   }
 
   deleteFeatureTask(info) {
