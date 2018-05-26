@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Subject } from "rxjs/Subject";
 
 @Injectable()
 
@@ -12,8 +12,10 @@ export class GoalApiService {
    return this.http.post("/datagoal/creategoal", goalInfo);
   }
 
-  getUserProjects() {
-    return this.http.get("/dataproject/alluserprojects");
+  newGoalSubject = new Subject();
+
+  getUserGoals() {
+    return this.http.get("/datagoal/allusergoals");
   }
 
   updateProject(id, info) {

@@ -6,7 +6,7 @@
           <h3><strong>Add Goal</strong></h3>
         </div>
         <div *ngFor="let allGoals of allGoals" (click)="selectCurrentGoal(allGoals)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allGoals) }">
-          <h3 class="text-center"><strong>{{allGoals?.projectTitle}}</strong></h3>
+          <h3 class="text-center"><strong>{{allGoals?.goalTitle}}</strong></h3>
           <button *ngIf="showAdd && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
           <button *ngIf="!showAdd && isActive(allGoals)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
           <button *ngIf="showUpdate && isActive(allGoals)" (click)="updateDisplay(false, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>

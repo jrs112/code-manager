@@ -93,7 +93,7 @@ export class ProjectViewComponent implements OnInit {
       }
     }
       return false;
-  };
+  }
 
   updateProjTask(projIndex, taskIndex, bool) {
     var updateObj = this.currentProjects[projIndex];

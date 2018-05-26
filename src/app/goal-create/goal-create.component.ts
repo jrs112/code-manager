@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserApiService } from "../services/user-api.service";
 import { GoalApiService } from "../services/goal-api.service";
 
 @Component({
@@ -9,22 +8,14 @@ import { GoalApiService } from "../services/goal-api.service";
 })
 export class GoalCreateComponent implements OnInit {
 
-  constructor(private userApiService: UserApiService, private goalApiService: GoalApiService) { }
+  constructor(private goalApiService: GoalApiService) { }
   goalTaskCount = 0;
   goalTaskArr = [];
   errMsg = "";
   userInfo;
 
   ngOnInit() {
-    this.userApiService.userInfo()
-      .subscribe(
-        (userInfo: any) => {
-          this.userInfo = userInfo;
-          console.log(this.userInfo);
-        },
-        (error) => console.log(error)
-        );
-        this.addGoalTask();
+    this.addGoalTask()
   }
 
   addGoalTask() {
@@ -70,6 +61,8 @@ export class GoalCreateComponent implements OnInit {
     .subscribe(
       (data: any) => {
         console.log("success: ", data);
+        this.goalApiService.newGoalSubject.next(data);
+        form.reset();
       },
       (err) => {
         console.log("there was an error: ", err);
