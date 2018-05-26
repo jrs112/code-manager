@@ -1,7 +1,12 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-4 text-center">
-      <div class="card defaultCardStyle">
+      <div class="list-group listGroupStyle">
+        <div routerLink="/viewallprojects" class="list-group-item listStyle pointerStyle text-center">
+          <h5><strong><i class="fa fa-arrow-left" aria-hidden="true"></i> Back To Projects</strong></h5>
+        </div>
+      </div>
+      <div class="card createProjCardStyle">
         <div class="card projectCardStyle">
           <h1><strong>Enter Project Info</strong></h1>
           <form #f="ngForm">
@@ -110,7 +115,7 @@
   </div>
   <div class="row justify-content-center">
     <div class="col-8 text-center">
-      <div class="card createProjCardStyle">
+      <div class="card createProjBtnCardStyle">
         <button type="button" class="btn btn-default waves-light btn-inline" (click)="createProject(f, k, n)" mdbRippleRadius>Create Project</button>
         <div *ngIf="showProjCreateMsg == true">
           <div class="alert alert-success text-center">

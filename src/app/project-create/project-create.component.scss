@@ -41,5 +41,27 @@
 
 }
 .createProjCardStyle {
+  margin-top: 0px;
+}
+.listStyle {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  margin: 0px;
+  padding: 15px;
+  margin-top: 15px;
+  cursor: pointer;
+  color: rgb(228,0,15);
+}
+
+.listStyle:hover {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(228,188,54);
+  background: rgb(0,62,83);
+  color: rgb(210,233,225);
+}
+
+.createProjBtnCardStyle {
   margin-top: 15px;
 }

@@ -1,11 +1,14 @@
 <div class="container-fluid">
-  <div class="row justify-content-center">
+  <div class="row">
     <div class="col-2">
       <div class="list-group listGroupStyle">
+        <div routerLink="/createproject" class="list-group-item listStyle pointerStyle text-center">
+          <h3><strong>Add Project</strong></h3>
+        </div>
         <div *ngFor="let allProject of allProjects" (click)="selectCurrentProject(allProject)" class="list-group-item listStyle pointerStyle" [ngClass]="{'clickedClass': isActive(allProject) }">
           <h3 class="text-center"><strong>{{allProject?.projectTitle}}</strong></h3>
-          <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = false" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
-          <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStory = true" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Story</button>
+          <button *ngIf="showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStoryFunc()" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Hide Story</button>
+          <button *ngIf="!showStory && isActive(allProject) && allProject.projectStory.length > 0" (click)="showStoryFunc()" type="button" class="btn btn-info waves-light btn-block btn-sm" mdbRippleRadius>Story</button>
           <button *ngIf="showAdd && isActive(allProject)" (click)="updateDisplay(false, false)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Hide Add</button>
           <button *ngIf="!showAdd && isActive(allProject)" (click)="updateDisplay(false, true)" type="button" class="btn btn-success waves-light btn-block btn-sm" mdbRippleRadius>Add</button>
           <button *ngIf="showUpdate && isActive(allProject)" (click)="updateDisplay(false, false)" type="button" class="btn btn-warning waves-light btn-block btn-sm" mdbRippleRadius>Hide Update</button>
@@ -13,15 +16,15 @@
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-{{colNumber}}">
       <div *ngIf="currentProjects.length === 0 ">
-        <div class="card defaultCardStyle text-center">
+        <div class="card defaultCardStyle text-center mx-auto">
           <h1>Select A Project On The Left</h1>
         </div>
       </div>
       <div *ngIf="currentProjects.length > 0">
         <div *ngFor="let project of currentProjects; let i = index">
-          <div class="card defaultCardStyle">
+          <div class="card defaultCardStyle mx-auto">
             <h1 class="text-center"><strong>{{project?.projectTitle}}</strong></h1>
             <h4 class="text-center"><strong>{{project?.projectDescription}}</strong></h4>
             <div *ngIf="showUpdate">
@@ -76,7 +79,7 @@
               </form>
             </div>
             <ul *ngFor="let projectTask of project.projectTask; let j = index">
-              <li class="pointerStyle" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
+              <li class="pointerStylel" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
                 <h5>{{projectTask?.taskTitle}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteProjTask(project, projectTask, i, j)">Delete Task</button></h5>
                 <h6>{{projectTask?.taskDescription}}</h6>
               </li>

@@ -20,15 +20,29 @@ export class ProjectViewComponent implements OnInit {
   showAdd = false;
   showDeleteProj = false;
   defaultStepOrder = 1;
+  colNumber = "8";
+
+
 
   ngOnInit() {
     this.getAllProjects();
 
   }
 
+
   updateDisplay(updateBool: boolean, addBool: boolean) {
     this.showUpdate = updateBool;
     this.showAdd = addBool;
+  }
+
+  showStoryFunc() {
+    if(this.showStory) {
+      this.showStory = false;
+      this.colNumber = "8";
+    } else {
+      this.showStory = true;
+      this.colNumber = "6";
+    }
   }
 
   showFeatureForm() {
@@ -59,6 +73,7 @@ export class ProjectViewComponent implements OnInit {
     this.showStory = false;
     this.showUpdate = false;
     this.showAdd = false;
+    this.colNumber = "8";
     this.currentProjects.push(selectedProject);
     console.log(this.currentProjects);
     for (var i = 0; i < this.currentProjects.length; i++) {
