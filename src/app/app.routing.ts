@@ -6,6 +6,7 @@ import { ProjectCreateComponent } from "./project-create/project-create.componen
 import { ProjectViewComponent } from "./project-view/project-view.component";
 import { SessionViewComponent } from "./session-view/session-view.component";
 import { GoalViewComponent } from "./goal-view/goal-view.component";
+import { CanDeactivateGuard } from "./services/can-deactivate-guard.service";
 
 export const routes: Routes = [
 
@@ -24,7 +25,8 @@ export const routes: Routes = [
   },
   {
     path: 'createproject',
-    component: ProjectCreateComponent
+    component: ProjectCreateComponent,
+    canDeactivate: [CanDeactivateGuard]
   },
   {
     path: 'viewallprojects',

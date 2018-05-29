@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserApiService } from "./services/user-api.service";
 import { ProjectApiService } from "./services/project-api.service";
 import { GoalApiService } from "./services/goal-api.service";
+import { CanDeactivateGuard } from "./services/can-deactivate-guard.service";
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { ProjectCreateComponent } from './project-create/project-create.component';
 import { ProjectViewComponent } from './project-view/project-view.component';
@@ -45,7 +46,7 @@ import { GoalCreateComponent } from './goal-create/goal-create.component';
     RouterModule.forRoot(routes)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [UserApiService, ProjectApiService, GoalApiService],
+  providers: [UserApiService, ProjectApiService, GoalApiService, CanDeactivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

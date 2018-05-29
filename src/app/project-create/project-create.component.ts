@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserApiService } from "../services/user-api.service";
 import { ProjectApiService } from "../services/project-api.service";
+import { CanDeactivateGuard } from "../services/can-deactivate-guard.service";
 
 @Component({
   selector: 'app-project-create',
@@ -22,6 +23,7 @@ export class ProjectCreateComponent implements OnInit {
   storySaveErrMsg = "";
   projTitleSaveErrMsg = "";
   showProjCreateMsg = false;
+  projectTitle = "";
 
   constructor(private userApiService: UserApiService, private projectApiService: ProjectApiService) { }
 
@@ -35,6 +37,18 @@ export class ProjectCreateComponent implements OnInit {
         (error) => console.log(error)
         );
   }
+
+  canDeactivate() {
+    console.log('i am navigating away');
+  //if the project title is not blank
+    if (this.projectTitle != '' && this.projectTitle != null) {
+      var response = confirm("Are you sure you want to leave without saving your project?");
+      return response;
+    }
+
+    return true;
+}
+
 
 
   addProjTask() {

@@ -84,6 +84,7 @@ export class GoalViewComponent implements OnInit {
         console.log("success", data);
         this.getUserGoals();
         this.currentGoals = [];
+        this.showDeleteGoal = false;
       }
     )
   }

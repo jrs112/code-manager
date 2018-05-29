@@ -37,8 +37,8 @@ export class GoalCreateComponent implements OnInit {
     let goalTaskInfo = [];
 
     for(var i = 0; i < this.goalTaskArr.length; i++) {
-      let goalTaskTitle = this.goalTaskArr[i].taskTitle;
-      let goalTaskDescription = this.goalTaskArr[i].taskDescription;
+      let goalTaskTitle = goalInfo[this.goalTaskArr[i].taskTitle];
+      let goalTaskDescription = goalInfo[this.goalTaskArr[i].taskDescription];
       let goalTaskObj = {
         taskTitle: goalTaskTitle,
         taskDescription: goalTaskDescription
