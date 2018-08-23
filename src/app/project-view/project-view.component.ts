@@ -355,6 +355,7 @@ export class ProjectViewComponent implements OnInit {
         console.log("success", data);
         this.getAllProjects();
         this.currentProjects = [];
+        this.showDeleteProj = false;
       }
     )
   }

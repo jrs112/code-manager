@@ -270,6 +270,7 @@ export class ProjectCreateComponent implements OnInit {
       this.featureSaveErrMsg = "";
       this.storySaveErrMsg = "";
       this.projTitleSaveErrMsg = "";
+      project.reset();
       this.showProjCreateMsg = true;
       },
     (err) =>  {

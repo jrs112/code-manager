@@ -79,7 +79,7 @@
               </form>
             </div>
             <ul *ngFor="let projectTask of project.projectTask; let j = index">
-              <li class="pointerStylel" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
+              <li class="pointerStyle" *ngIf="!projectTask.taskCompleted" (click)="updateProjTask(i, j, true)">
                 <h5>{{projectTask?.taskTitle}}<button *ngIf="showUpdate" type="button" class="btn btn-outline-danger waves-light btn-sm" mdbRippleRadius (click)="deleteProjTask(project, projectTask, i, j)">Delete Task</button></h5>
                 <h6>{{projectTask?.taskDescription}}</h6>
               </li>
